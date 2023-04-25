@@ -167,6 +167,7 @@ public class JavaSocketServer {
     public String[][] OrderTable() {
         String[][] data = null;
         try {
+            
             dao.stmt = null;
             if (dao.conn != null) {
                 dao.stmt = dao.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
