@@ -1,0 +1,4 @@
+0 None
+1 pencil
+2 person
+3 cellPhone
