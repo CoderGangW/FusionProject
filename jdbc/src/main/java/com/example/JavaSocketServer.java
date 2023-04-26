@@ -16,9 +16,10 @@ public class JavaSocketServer {
     public String logined_admin;
    
     static DAO dao = new DAO();
-    
+
     public void start(int port) throws IOException {
 
+        // Socket server Open
         serverSocket = new ServerSocket(port);
         System.out.println("\n√  JAVA 서버가 " + port +"번 포트에서 실행중입니다.");
         clientSocket = serverSocket.accept();
