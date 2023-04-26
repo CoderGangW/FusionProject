@@ -16,7 +16,6 @@ public class JavaSocketServer {
     public String logined_admin;
    
     static DAO dao = new DAO();
-
     
     public void start(int port) throws IOException {
 
