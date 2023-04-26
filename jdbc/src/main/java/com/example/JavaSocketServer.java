@@ -8,8 +8,6 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
-
-
   
 public class JavaSocketServer {
     private ServerSocket serverSocket;
@@ -18,6 +16,7 @@ public class JavaSocketServer {
     public String logined_admin;
    
     static DAO dao = new DAO();
+
     
     public void start(int port) throws IOException {
 
