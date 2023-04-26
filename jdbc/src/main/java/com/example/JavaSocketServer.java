@@ -17,7 +17,6 @@ public class JavaSocketServer {
    
     static DAO dao = new DAO();
 
-
     // Socket server Open
     public void start(int port) throws IOException {
         serverSocket = new ServerSocket(port);

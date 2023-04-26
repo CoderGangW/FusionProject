@@ -18,10 +18,13 @@ import javax.swing.KeyStroke;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 import javax.swing.ListSelectionModel;
 import java.awt.Color;
@@ -93,6 +96,7 @@ public class AdminGUI {
 	 * Initialize the contents of the frame.
 	 */
 	public void initialize() {
+
 		admLogin = new JFrame("관리자 접근 시스템");
 		admLogin.setBounds(100, 100, 900, 600);
 		admLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -321,9 +325,8 @@ public class AdminGUI {
 			Class[] columnTypes = new Class[] {
 				Object.class, String.class
 			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
+
+			
 		});
 		selected_order.getColumnModel().getColumn(0).setPreferredWidth(83);
 		selected_order.getColumnModel().getColumn(0).setMinWidth(30);
