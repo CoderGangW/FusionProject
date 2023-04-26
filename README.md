@@ -1,4 +1,4 @@
-<img src="https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section=header&text=FusionProject&fontSize=90" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=#FF00FF&height=200&section=header&text=FusionProject&fontSize=90" />
 #FusionProject Regulation
 
 ##Java file 
