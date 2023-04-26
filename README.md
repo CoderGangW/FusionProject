@@ -1,11 +1,13 @@
-Java file 
-:: jdbc / src /  (main/java/com)/exampe / ..
+#FusionProject Regulation
 
-Python file
-:: python_project / ..
+##Java file 
+###:: jdbc / src /  (main/java/com)/exampe / ..
 
-Arduino
-::  topython / ..
+##Python file
+###:: python_project / ..
+
+##Arduino
+###::  topython / ..
 
 DO NOT OPEN OR CHANGE OTHER FILES.
 
