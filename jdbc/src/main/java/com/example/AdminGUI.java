@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.EventObject;
 
 import javax.swing.SwingConstants;
 import javax.swing.JPanel;
@@ -19,6 +20,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -27,6 +29,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 import javax.swing.ListSelectionModel;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 
 import javax.swing.border.LineBorder;
@@ -41,8 +45,8 @@ public class AdminGUI {
 	private JFrame admLogin;
 	private JTextField admnum_Field;
 	private JPasswordField pass_Field;
-	private JTable selected_order;
 	private JTable order_list;
+	private JTable selected_order;
 	private JScrollPane scrolledTable;
 	private ArrayList<String> orderIds = new ArrayList<>();
 	
@@ -305,29 +309,28 @@ public class AdminGUI {
 		cnt_panel.setLayout(null);
 		cnt_panel.setVisible(false);
 		
+		// 선택 불가능한 행과 열 인덱스
 		selected_order = new JTable();
 		selected_order.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		selected_order.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		selected_order.setFont(new Font("아임크리수진", Font.PLAIN, 13));
 		selected_order.setModel(new DefaultTableModel(
-			new Object[][] {
-				{" 주문번호", null},
-				{" 이름", null},
-				{" 전화번호", null},
-				{" 스타일", null},
-				{" 커스텀여부", null},
-				{" 날짜", null},
-			},
-			new String[] {
-				"Info", "ORDER_INFO"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				Object.class, String.class
-			};
-
-			
-		});
+				new Object[][] {
+					{" 주문번호", null},
+					{" 이름", null},
+					{" 전화번호", null},
+					{" 스타일", null},
+					{" 커스텀여부", null},
+					{" 날짜", null},
+				},
+				new String[] {
+					"Info", "ORDER_INFO"
+				}
+			) {
+				Class[] columnTypes = new Class[] {
+					Object.class, String.class
+				};
+			});
 		selected_order.getColumnModel().getColumn(0).setPreferredWidth(83);
 		selected_order.getColumnModel().getColumn(0).setMinWidth(30);
 		selected_order.getColumnModel().getColumn(1).setPreferredWidth(244);
@@ -335,6 +338,7 @@ public class AdminGUI {
 		selected_order.setBounds(577, 65, 294, 180);
 		selected_order.setRowHeight(30);
 		cnt_panel.add(selected_order);
+
 		
 		JLabel lblNewLabel = new JLabel("님이 관리중입니다");
 		lblNewLabel.setForeground(Color.DARK_GRAY);
@@ -666,42 +670,131 @@ public class AdminGUI {
 
 				editBtn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e){
-						int [] columnwidth = {38,57,84,90,69,150};
-						int ans = JOptionPane.showConfirmDialog(null, "정말로 변경하시겠습니까?", "주문정보 변경", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
-						if (ans == 0){
-							String[] targetOrder = {
-								String.valueOf(selected_order.getValueAt(0, 1)),
-								String.valueOf(selected_order.getValueAt(1, 1)),
-								String.valueOf(selected_order.getValueAt(2, 1)),
-								String.valueOf(selected_order.getValueAt(3, 1)),
-								String.valueOf(selected_order.getValueAt(4, 1))
-							};
-							JSS.editOrder(targetOrder);
-
-							String[][] list_data = JSS.OrderTable();
-
-							// 테이블 모델에 데이터 적용
-							DefaultTableModel model = (DefaultTableModel) order_list.getModel();
-							model.setDataVector(list_data, new String[] {"ID", "NAME", "PHONE", "MATERIAL", "CUSTOM", "DATE"});
-
-							TableColumnModel columnModel = order_list.getColumnModel();
-							for(int i =0; i<6; i++){
-								columnModel.getColumn(i).setPreferredWidth(columnwidth[i]);
-							}
-
-							// 테이블 리프레시
-							order_list.repaint();
-
-							// orderIds 초기화
-							orderIds.clear();
-							// 새로운 orderIds 생성
-							for (String[] row : list_data) {
-								String orderId = row[0];
-								if (!orderIds.contains(orderId)) {
-								orderIds.add(orderId);
+						if(selected_order.getValueAt(0, 1) == null){
+							JOptionPane.showMessageDialog(null, "주문을 선택하지않았습니다.", "주문을 선택해 주세요", 0);
+						}
+						else{
+							final JFrame newEditFrame = new JFrame("주문 수정");
+							newEditFrame.setSize(400, 300);
+							newEditFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+							newEditFrame.setLocation(850,400);
+							newEditFrame.setLayout(null);
+	
+							// 라벨 추가
+							JLabel orderNumLabel = new JLabel("주문번호:");
+							orderNumLabel.setFont(new Font("아임크리수진", Font.PLAIN, 20));
+							orderNumLabel.setBounds(20, 20, 100, 20);
+							newEditFrame.add(orderNumLabel);
+	
+							JLabel nameLabel = new JLabel("이름:");
+							nameLabel.setFont(new Font("아임크리수진", Font.PLAIN, 20));
+							nameLabel.setBounds(20, 50, 100, 20);
+							newEditFrame.add(nameLabel);
+	
+							JLabel phoneNumLabel = new JLabel("전화번호:");
+							phoneNumLabel.setFont(new Font("아임크리수진", Font.PLAIN, 20));
+							phoneNumLabel.setBounds(20, 80, 100, 20);
+							newEditFrame.add(phoneNumLabel);
+	
+							JLabel styleLabel = new JLabel("스타일:");
+							styleLabel.setFont(new Font("아임크리수진", Font.PLAIN, 20));
+							styleLabel.setBounds(20, 110, 100, 20);
+							newEditFrame.add(styleLabel);
+	
+							JLabel customLabel = new JLabel("커스텀여부:");
+							customLabel.setFont(new Font("아임크리수진", Font.PLAIN, 20));
+							customLabel.setBounds(20, 140, 100, 20);
+							newEditFrame.add(customLabel);
+	
+							JLabel dateLabel = new JLabel("날짜:");
+							dateLabel.setFont(new Font("아임크리수진", Font.PLAIN, 20));
+							dateLabel.setBounds(20, 170, 100, 20);
+							newEditFrame.add(dateLabel);
+	
+							JLabel orderNumValueLabel = new JLabel(String.valueOf(selected_order.getValueAt(0, 1)));
+							orderNumValueLabel.setFont(new Font("아임크리수진", Font.PLAIN, 16));
+							orderNumValueLabel.setBounds(130, 20, 200, 20);
+							newEditFrame.add(orderNumValueLabel);
+	
+							final JTextField nameTextField = new JTextField(String.valueOf(selected_order.getValueAt(1, 1)));
+							nameTextField.setFont(new Font("아임크리수진", Font.PLAIN, 16));
+							nameTextField.setBounds(130, 50, 200, 20);
+							newEditFrame.add(nameTextField);
+	
+							final JTextField phoneTextField = new JTextField(String.valueOf(selected_order.getValueAt(2, 1)));
+							phoneTextField.setFont(new Font("아임크리수진", Font.PLAIN, 16));
+							phoneTextField.setBounds(130, 80, 200, 20);
+							newEditFrame.add(phoneTextField);
+	
+							JLabel dateValueLabel = new JLabel(String.valueOf(selected_order.getValueAt(5, 1)));
+							dateValueLabel.setFont(new Font("아임크리수진", Font.PLAIN, 15));
+							dateValueLabel.setBounds(130, 170, 200, 20);
+							newEditFrame.add(dateValueLabel);
+	
+							// 콤보박스 추가
+							String[] styleList = {""," Square", " Rectangle", " Hexagon"," Octagon"};
+							final JComboBox<String> styleComboBox = new JComboBox<String>(styleList);
+							styleComboBox.setFont(new Font("아임크리수진", Font.PLAIN, 16));
+							styleComboBox.setBounds(130, 110, 200, 20);
+							newEditFrame.add(styleComboBox);
+	
+							String[] customList = {""," YES", " NO"};
+							final JComboBox<String> customComboBox = new JComboBox<String>(customList);
+							customComboBox.setFont(new Font("아임크리수진", Font.PLAIN, 16));
+							customComboBox.setBounds(130, 140, 200, 20);
+							newEditFrame.add(customComboBox);
+	
+							JButton modifyButton = new JButton("주문 수정");
+							modifyButton.setFont(new Font("아임크리수진", Font.PLAIN, 20));
+							modifyButton.setBounds(85, 210, 200, 30);
+							newEditFrame.add(modifyButton);
+	
+							newEditFrame.setVisible(true);
+	
+							modifyButton.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent e){
+									int [] columnwidth = {38,57,84,90,69,150};
+									int ans = JOptionPane.showConfirmDialog(null, "정말로 변경하시겠습니까?", "주문정보 변경", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+									if (ans == 0){
+										String[] targetOrder={
+											String.valueOf(selected_order.getValueAt(0, 1)),
+											String.valueOf(" "+nameTextField.getText().trim()),
+											String.valueOf(" "+phoneTextField.getText().trim()),
+											String.valueOf(styleComboBox.getSelectedItem().toString()),
+											String.valueOf(customComboBox.getSelectedItem().toString())
+										};
+										JSS.editOrder(targetOrder);
+			
+										String[][] list_data = JSS.OrderTable();
+			
+										// 테이블 모델에 데이터 적용
+										DefaultTableModel model = (DefaultTableModel) order_list.getModel();
+										model.setDataVector(list_data, new String[] {"ID", "NAME", "PHONE", "MATERIAL", "CUSTOM", "DATE"});
+			
+										TableColumnModel columnModel = order_list.getColumnModel();
+										for(int i =0; i<6; i++){
+											columnModel.getColumn(i).setPreferredWidth(columnwidth[i]);
+										}
+			
+										// 테이블 리프레시
+										order_list.repaint();
+			
+										// orderIds 초기화
+										orderIds.clear();
+										// 새로운 orderIds 생성
+										for (String[] row : list_data) {
+											String orderId = row[0];
+											if (!orderIds.contains(orderId)) {
+											orderIds.add(orderId);
+											}
+										}
+										JOptionPane.showMessageDialog(null, "주문정보가 변경되었습니다.", "변경 완료",JOptionPane.PLAIN_MESSAGE);
+										newEditFrame.dispose();
+									}
+	
+	
 								}
-							}
-							JOptionPane.showMessageDialog(null, "주문정보가 변경되었습니다.", "변경 완료",JOptionPane.PLAIN_MESSAGE);
+							});
 						}
 					}
 				});
