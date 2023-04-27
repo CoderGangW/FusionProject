@@ -9,8 +9,6 @@ import tensorflow as tf
 import socket
 import serial
 
-# 이것은 파이썬이 오브젝트를 인식합니다.
-
 ser = serial.Serial('COM3', 9600) # 포트와 시리얼 통신 속도 설정
 
 tf.keras.utils.disable_interactive_logging()
