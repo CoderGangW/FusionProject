@@ -772,35 +772,30 @@ public class AdminGUI {
 													JOptionPane.showMessageDialog(null, "커스텁유무 선택해주세요", "정보 미입력", 0);
 												}else{
 													boolean amt_check = false;
-													String old_shape = null;
 													int[] cntamt = JSS.load_amount();
 													if (styleComboBox.getSelectedItem().toString()==" Square"){
 														if(cntamt[0] == 0 ){
 															amt_check = false;
 														} else {
 															amt_check = true;
-															old_shape = "Square";
 														}
 													}else if (styleComboBox.getSelectedItem().toString()==" Rectangle"){
 														if(cntamt[1] == 0 ){
 															amt_check = false;
 														} else {
 															amt_check = true;
-															old_shape = "Rectangle";
 														}
 													}else if(styleComboBox.getSelectedItem().toString()==" Hexagon"){
 														if(cntamt[2] == 0 ){
 															amt_check = false;
 														} else {
 															amt_check = true;
-															old_shape = "Hexagon";
 														}
 													}else if(styleComboBox.getSelectedItem().toString()==" Octagon"){
 														if(cntamt[3] == 0 ){
 															amt_check = false;
 														} else {
 															amt_check = true;
-															old_shape = "Octagon";
 														}
 													}
 													if(amt_check){
