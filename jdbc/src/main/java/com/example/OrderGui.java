@@ -219,9 +219,7 @@ public class OrderGui {
 				
 				AdminGUI adgui = new AdminGUI();
 				int[] cntamt = JSS.load_amount();
-				for(int i = 0; i<4; i++){
-					System.out.println(cntamt[i]);
-				}
+				
 				adgui.rectangle_amt.setText(Integer.toString(cntamt[0])+" 개");
 				adgui.square_amt.setText(Integer.toString(cntamt[1])+" 개");
 				adgui.hexagon_amt.setText(Integer.toString(cntamt[2])+" 개");

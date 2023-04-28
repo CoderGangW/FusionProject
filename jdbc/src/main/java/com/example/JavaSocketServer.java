@@ -250,8 +250,6 @@ public class JavaSocketServer {
     public void edtOrder_mat(String old_order, String edt_order){
         String nsp_old_order = old_order.trim();
         String nsp_edt_order = edt_order.trim();
-        System.out.println(nsp_old_order);
-        System.out.println(nsp_edt_order);
 
         String updateShape_old = "UPDATE materials set " + nsp_old_order + " = " + nsp_old_order + " + 1 WHERE idmaterials = 1";   
         try (PreparedStatement pstmt = dao.conn.prepareStatement(updateShape_old)){
@@ -278,7 +276,7 @@ public class JavaSocketServer {
             }
             pstmt.setInt(5,intID);
             pstmt.executeUpdate();
-            System.out.println("\n √  데이터 수정 성공 - 주문정보");
+            System.out.println("\n√  데이터 수정 성공 - 주문정보");
         }catch (Exception e) {
             e.printStackTrace();
             System.out.println("ERROR - Update buyerinfo module" + e.getMessage());
