@@ -246,6 +246,27 @@ public class JavaSocketServer {
             System.out.println("ERROR - Update materials module" + e.getMessage());
         }
     }
+    //수정된 주문 자재 갯수 수정
+    public void edtOrder_mat(String old_order, String edt_order){
+        String nsp_old_order = old_order.trim();
+        String nsp_edt_order = edt_order.trim();
+        System.out.println(nsp_old_order);
+        System.out.println(nsp_edt_order);
+
+        String updateShape_old = "UPDATE materials set " + nsp_old_order + " = " + nsp_old_order + " + 1 WHERE idmaterials = 1";   
+        try (PreparedStatement pstmt = dao.conn.prepareStatement(updateShape_old)){
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("ERROR - nps_old_order Update" + e.getMessage());
+        }
+
+        String updateShape_edt = "UPDATE materials set " + nsp_edt_order + " = " + nsp_edt_order + " - 1 WHERE idmaterials = 1";   
+        try (PreparedStatement pstmt = dao.conn.prepareStatement(updateShape_edt)){
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("ERROR - nps_edt_order Update" + e.getMessage());
+        }
+    }
 
     //주문정보 수정
     public void editOrder(String[] editedOrder){

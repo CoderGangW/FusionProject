@@ -644,19 +644,23 @@ public class AdminGUI {
 						int rec = Integer.parseInt(rectangle_ps_amt.getText());
 						int hex = Integer.parseInt(hexagon_ps_amt.getText());
 						int oct = Integer.parseInt(octagon_ps_amt.getText());
-						int[] upAmount = {rec,sqa,hex,oct};
-						JSS.update_mat_amt(upAmount);
-
-						int[] cntamt = JSS.load_amount();
-						rectangle_amt.setText(Integer.toString(cntamt[0])+" 개");
-						square_amt.setText(Integer.toString(cntamt[1])+" 개");
-						hexagon_amt.setText(Integer.toString(cntamt[2])+" 개");
-						octagon_amt.setText(Integer.toString(cntamt[3])+" 개");
-
-						square_ps_amt.setText("0");
-						rectangle_ps_amt.setText("0");
-						hexagon_ps_amt.setText("0");
-						octagon_ps_amt.setText("0");
+						if(sqa == 0 && rec == 0 && hex == 0 && oct == 0){
+							JOptionPane.showMessageDialog(null, "추가할 자재갯수는 모두 0개가 될 수 없습니다", "자재 추가 오류",JOptionPane.WARNING_MESSAGE );
+						} else{
+							int[] upAmount = {rec,sqa,hex,oct};
+							JSS.update_mat_amt(upAmount);
+	
+							int[] cntamt = JSS.load_amount();
+							square_amt.setText(Integer.toString(cntamt[0])+" 개");
+							rectangle_amt.setText(Integer.toString(cntamt[1])+" 개");
+							hexagon_amt.setText(Integer.toString(cntamt[2])+" 개");
+							octagon_amt.setText(Integer.toString(cntamt[3])+" 개");
+	
+							square_ps_amt.setText("0");
+							rectangle_ps_amt.setText("0");
+							hexagon_ps_amt.setText("0");
+							octagon_ps_amt.setText("0");
+						}
 					}
 				});
 
@@ -753,46 +757,99 @@ public class AdminGUI {
 	
 							modifyButton.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent e){
-									int [] columnwidth = {38,57,84,90,69,150};
-									int ans = JOptionPane.showConfirmDialog(null, "정말로 변경하시겠습니까?", "주문정보 변경", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
-									if (ans == 0){
-										String[] targetOrder={
-											String.valueOf(selected_order.getValueAt(0, 1)),
-											String.valueOf(" "+nameTextField.getText().trim()),
-											String.valueOf(" "+phoneTextField.getText().trim()),
-											String.valueOf(styleComboBox.getSelectedItem().toString()),
-											String.valueOf(customComboBox.getSelectedItem().toString())
-										};
-										JSS.editOrder(targetOrder);
-			
-										String[][] list_data = JSS.OrderTable();
-			
-										// 테이블 모델에 데이터 적용
-										DefaultTableModel model = (DefaultTableModel) order_list.getModel();
-										model.setDataVector(list_data, new String[] {"ID", "NAME", "PHONE", "MATERIAL", "CUSTOM", "DATE"});
-			
-										TableColumnModel columnModel = order_list.getColumnModel();
-										for(int i =0; i<6; i++){
-											columnModel.getColumn(i).setPreferredWidth(columnwidth[i]);
+									if (nameTextField.getText().trim().equals("") ){
+										JOptionPane.showMessageDialog(null, "이름을 입력해주세요", "정보 미입력", 0);
+									}else{
+										if(phoneTextField.getText().trim().equals("")){
+											JOptionPane.showMessageDialog(null, "전화번호를 입력해주세요", "정보 미입력", 0);
 										}
-			
-										// 테이블 리프레시
-										order_list.repaint();
-			
-										// orderIds 초기화
-										orderIds.clear();
-										// 새로운 orderIds 생성
-										for (String[] row : list_data) {
-											String orderId = row[0];
-											if (!orderIds.contains(orderId)) {
-											orderIds.add(orderId);
+										else{
+											if(styleComboBox.getSelectedItem().toString()==""){
+												JOptionPane.showMessageDialog(null, "스타일을 선택해주세요", "정보 미입력", 0);
+											}
+											else{
+												if(customComboBox.getSelectedItem().toString()==""){
+													JOptionPane.showMessageDialog(null, "커스텁유무 선택해주세요", "정보 미입력", 0);
+												}else{
+													boolean amt_check = false;
+													String old_shape = null;
+													int[] cntamt = JSS.load_amount();
+													if (styleComboBox.getSelectedItem().toString()==" Square"){
+														if(cntamt[0] == 0 ){
+															amt_check = false;
+														} else {
+															amt_check = true;
+															old_shape = "Square";
+														}
+													}else if (styleComboBox.getSelectedItem().toString()==" Rectangle"){
+														if(cntamt[1] == 0 ){
+															amt_check = false;
+														} else {
+															amt_check = true;
+															old_shape = "Rectangle";
+														}
+													}else if(styleComboBox.getSelectedItem().toString()==" Hexagon"){
+														if(cntamt[2] == 0 ){
+															amt_check = false;
+														} else {
+															amt_check = true;
+															old_shape = "Hexagon";
+														}
+													}else if(styleComboBox.getSelectedItem().toString()==" Octagon"){
+														if(cntamt[3] == 0 ){
+															amt_check = false;
+														} else {
+															amt_check = true;
+															old_shape = "Octagon";
+														}
+													}
+													if(amt_check){
+														int [] columnwidth = {38,57,84,90,69,150};
+														int ans = JOptionPane.showConfirmDialog(null, "정말로 변경하시겠습니까?", "주문정보 변경", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+														if (ans == 0){
+															String[] targetOrder={
+																String.valueOf(selected_order.getValueAt(0, 1)),
+																String.valueOf(" "+nameTextField.getText().trim()),
+																String.valueOf(" "+phoneTextField.getText().trim()),
+																String.valueOf(styleComboBox.getSelectedItem().toString()),
+																String.valueOf(customComboBox.getSelectedItem().toString())
+															};
+															JSS.editOrder(targetOrder);
+															JSS.edtOrder_mat(String.valueOf(selected_order.getValueAt(3, 1)),styleComboBox.getSelectedItem().toString());
+								
+															String[][] list_data = JSS.OrderTable();
+								
+															// 테이블 모델에 데이터 적용
+															DefaultTableModel model = (DefaultTableModel) order_list.getModel();
+															model.setDataVector(list_data, new String[] {"ID", "NAME", "PHONE", "MATERIAL", "CUSTOM", "DATE"});
+								
+															TableColumnModel columnModel = order_list.getColumnModel();
+															for(int i =0; i<6; i++){
+																columnModel.getColumn(i).setPreferredWidth(columnwidth[i]);
+															}
+								
+															// 테이블 리프레시
+															order_list.repaint();
+								
+															// orderIds 초기화
+															orderIds.clear();
+															// 새로운 orderIds 생성
+															for (String[] row : list_data) {
+																String orderId = row[0];
+																if (!orderIds.contains(orderId)) {
+																orderIds.add(orderId);
+																}
+															}
+															JOptionPane.showMessageDialog(null, "주문정보가 변경되었습니다.", "변경 완료",JOptionPane.PLAIN_MESSAGE);
+															newEditFrame.dispose();
+														}
+													} else {
+														JOptionPane.showMessageDialog(null, "선택한 스타일의 재고가 없습니다", "재고 없음", 0);
+													}
+												}
 											}
 										}
-										JOptionPane.showMessageDialog(null, "주문정보가 변경되었습니다.", "변경 완료",JOptionPane.PLAIN_MESSAGE);
-										newEditFrame.dispose();
 									}
-	
-	
 								}
 							});
 						}
