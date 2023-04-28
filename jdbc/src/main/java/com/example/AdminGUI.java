@@ -5,13 +5,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
-import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.EventObject;
 
 import javax.swing.SwingConstants;
 import javax.swing.JPanel;
@@ -20,18 +17,14 @@ import javax.swing.KeyStroke;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.BorderFactory;
-import javax.swing.DefaultCellEditor;
-import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 import javax.swing.ListSelectionModel;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 
 import javax.swing.border.LineBorder;
@@ -39,7 +32,6 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.ImageIcon;
-import javax.swing.JFormattedTextField;
 
 public class AdminGUI extends JFrame {
 
@@ -48,7 +40,6 @@ public class AdminGUI extends JFrame {
 	private JPasswordField pass_Field;
 	private JTable order_list;
 	private JTable selected_order;
-	private JScrollPane scrolledTable;
 	private ArrayList<String> orderIds = new ArrayList<>();
 
 	JavaSocketServer JSS = new JavaSocketServer();
@@ -337,9 +328,6 @@ public class AdminGUI extends JFrame {
 				new String[] {
 						"Info", "ORDER_INFO"
 				}) {
-			Class[] columnTypes = new Class[] {
-					Object.class, String.class
-			};
 		});
 		selected_order.getColumnModel().getColumn(0).setPreferredWidth(83);
 		selected_order.getColumnModel().getColumn(0).setMinWidth(30);
@@ -431,11 +419,11 @@ public class AdminGUI extends JFrame {
 				new String[] {
 						"ID", "NAME", "PHONE", "MATERIAL", "CUSTOM", "DATE"
 				}) {
-			Class[] columnTypes = new Class[] {
+			Class<?>[] columnTypes = new Class[] {
 					String.class, String.class, String.class, String.class, String.class, String.class
 			};
 
-			public Class getColumnClass(int columnIndex) {
+			public Class<?> getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 		});
