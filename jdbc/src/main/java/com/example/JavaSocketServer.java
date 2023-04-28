@@ -20,7 +20,7 @@ public class JavaSocketServer {
     // Socket server Open
     public void start(int port) throws IOException {
         serverSocket = new ServerSocket(port);
-        System.out.println("\n√  JAVA 서버가 " + port +"번 포트에서 실행중입니다.");
+        System.out.println("\n√  JAVA Socket 서버가 " + port +"번 포트에서 실행중입니다.");
         clientSocket = serverSocket.accept();
         System.out.println("\n√  클라이언트 접속됨");
         System.out.println("\n√  IP : " + clientSocket.getInetAddress().getHostName());
