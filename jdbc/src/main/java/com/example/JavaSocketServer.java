@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import javax.swing.JOptionPane;
   
 public class JavaSocketServer {
@@ -32,7 +33,7 @@ public class JavaSocketServer {
                 byte[] buffer = new byte[1024];
                 int bytesRead = in.read(buffer);
                 String response = new String(buffer, 0, bytesRead);
-                System.out.println("\n Detected Obj  :  " + response);
+                System.out.println("\nDetected Object  :  " + response);
 
                 Date nowDate = new Date();
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd a HH:mm:ss");
@@ -148,6 +149,7 @@ public class JavaSocketServer {
                                 String insertStr = "INSERT INTO buyerinfo(name, phone, material, custom, date) VALUES('"+NamefromGUI+ "' ,'"+PhonefromGUI+ "' ,'"+ShapefromGUI+ "' ,'"+CustomfromGUI+ "' , '"+now+"' )";
                                 dao.stmt.execute(insertStr);
                                 JOptionPane.showMessageDialog(null, "주문에 성공하였습니다!\n 관리자 곧 승인할것입니다.","주문 성공 ✅", JOptionPane.INFORMATION_MESSAGE);
+                                System.out.println(NamefromGUI+"|"+PhonefromGUI+"|"+ShapefromGUI+"|"+CustomfromGUI+"|"+now);
                                 System.out.println("√  데이터 추가 성공 - 구매정보");
                             } else{
                                 JOptionPane.showMessageDialog(null, "재고가 없습니다.\n 관리자에게 문의하세요.", "재고 오류 ⚠️",JOptionPane.WARNING_MESSAGE );
@@ -165,7 +167,6 @@ public class JavaSocketServer {
     public String[][] OrderTable() {
         String[][] data = null;
         try {
-            
             dao.stmt = null;
             if (dao.conn != null) {
                 dao.stmt = dao.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);

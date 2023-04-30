@@ -531,7 +531,7 @@ public class AdminGUI extends JFrame {
 			}
 		});
 
-		/* ---------------------------------- Event code ----------------------------------*/
+		/* ---------------------------------- Event code ---------------------------------- */
 
 		order_list.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent event) {

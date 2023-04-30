@@ -9,7 +9,8 @@ import tensorflow as tf
 import socket
 import serial
 
-ser = serial.Serial('COM3', 9600) # 포트와 시리얼 통신 속도 설정
+# 아두이노 시리얼 연결 (PORT , RATE)
+# ser = serial.Serial('COM3', 9600)
 
 tf.keras.utils.disable_interactive_logging()
 currentPath = os.getcwd()
@@ -30,7 +31,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     with open(currentPath + "\\python_project\\trained_model\\labels.txt", 'r', encoding='UTF-8') as f:
         class_labels = f.read().splitlines()
         os.system('cls')
-        print("Loading - [======    ] - 웹캠 모듈 불러오는중...")
+        print("Loading - [======    ] - 웹캠 모듈 불러오는중...") 
 
     # 웹캠에서 프레임 읽어오기
     cap = cv2.VideoCapture(0)
@@ -57,16 +58,21 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         cv_text = (class_name[2:]+" : "+ str(np.round(confidence_score * 100))[:-2]+ "%")
         cv2.putText(frame, cv_text,(10,25), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 255, 0),2)
         
+        if cv2.waitKey(1) & 0xFF == ord('c'):
+            os.system('cls')
+            print(" - 검출된 물체 :", class_name[2:], end=" | ")
+            print("신뢰도 :", str(np.round(confidence_score * 100))[:-2], "%")
+            s.send(class_name[2:].encode())
 
-        if ser.in_waiting > 0:
-            message = ser.readline().decode('utf-8').rstrip()
+        # if ser.in_waiting > 0:
+        #     message = ser.readline().decode('utf-8').rstrip()
 
-            if message == "Button pressed":
-                # Print prediction and confidence score
-                os.system('cls')
-                print(" - 검출된 물체 :", class_name[2:], end=" | ")
-                print("신뢰도 :", str(np.round(confidence_score * 100))[:-2], "%")
-                s.send(class_name[2:].encode())
+        #     if message == "Button pressed":
+        #         # Print prediction and confidence score
+        #         os.system('cls')
+        #         print(" - 검출된 물체 :", class_name[2:], end=" | ")
+        #         print("신뢰도 :", str(np.round(confidence_score * 100))[:-2], "%")
+        #         s.send(class_name[2:].encode())
 
         # 결과 프레임 출력
         cv2.imshow('frame', frame)
