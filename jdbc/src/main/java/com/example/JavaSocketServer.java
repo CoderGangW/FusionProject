@@ -57,7 +57,7 @@ public class JavaSocketServer {
     }
 
     
-    // 문자열 공백체크
+    /* 문자열 공백 체크 */
     static boolean isStringEmpty(String str) {
         return str == null || str.trim().isEmpty();
     }
@@ -145,7 +145,7 @@ public class JavaSocketServer {
                                 int setShapeDB = shapeFromDB - 1;
                                 String updateStr = "UPDATE materials"+" SET  "+shape+ " = "+setShapeDB+" ";
                                 dao.stmt.executeUpdate(updateStr);
-                                String insertStr = "INSERT INTO buyerinfo(name, phone, material, custom, date) VALUES(' " +NamefromGUI+ " ' ,' " +PhonefromGUI+ " ' ,' " +ShapefromGUI+ " ' ,' " +CustomfromGUI+ " ' , ' "+now+" ' )";
+                                String insertStr = "INSERT INTO buyerinfo(name, phone, material, custom, date) VALUES('"+NamefromGUI+ "' ,'"+PhonefromGUI+ "' ,'"+ShapefromGUI+ "' ,'"+CustomfromGUI+ "' , '"+now+"' )";
                                 dao.stmt.execute(insertStr);
                                 JOptionPane.showMessageDialog(null, "주문에 성공하였습니다!\n 관리자 곧 승인할것입니다.","주문 성공 ✅", JOptionPane.INFORMATION_MESSAGE);
                                 System.out.println("√  데이터 추가 성공 - 구매정보");

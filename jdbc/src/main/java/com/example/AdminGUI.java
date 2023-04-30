@@ -454,7 +454,7 @@ public class AdminGUI extends JFrame {
 		Login_panel.setLayout(null);
 
 		final JButton LoginBtn = new JButton("로그인");
-		LoginBtn.setBounds(631, 225, 113, 142);
+		LoginBtn.setBounds(633, 225, 113, 142);
 		LoginBtn.setFont(new Font("아임크리수진", Font.PLAIN, 25));
 		Login_panel.add(LoginBtn);
 
@@ -466,12 +466,12 @@ public class AdminGUI extends JFrame {
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(136, 225, 483, 142);
+		panel.setBounds(164, 225, 470, 142);
 		Login_panel.add(panel);
 		panel.setLayout(null);
 
 		JLabel numLabel = new JLabel("사원 번호 :");
-		numLabel.setBounds(25, 5, 182, 47);
+		numLabel.setBounds(12, 7, 200, 47);
 		panel.add(numLabel);
 		numLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		numLabel.setFont(new Font("아임크리수진", Font.PLAIN, 40));
@@ -483,7 +483,7 @@ public class AdminGUI extends JFrame {
 		admnum_Field.setColumns(10);
 
 		JLabel pwLabel = new JLabel("비밀 번호 :");
-		pwLabel.setBounds(25, 85, 182, 47);
+		pwLabel.setBounds(12, 84, 200, 47);
 		panel.add(pwLabel);
 		pwLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		pwLabel.setFont(new Font("아임크리수진", Font.PLAIN, 40));
@@ -492,7 +492,7 @@ public class AdminGUI extends JFrame {
 		pass_Field.setBounds(212, 90, 246, 42);
 		pass_Field.setColumns(10);
 		panel.add(pass_Field);
-		pass_Field.setEchoChar('*');
+		pass_Field.setEchoChar('●');
 		pass_Field.setFont(new Font("아임크리수진", Font.PLAIN, 30));
 
 		LoginBtn.registerKeyboardAction(LoginBtn.getActionForKeyStroke(
@@ -503,8 +503,6 @@ public class AdminGUI extends JFrame {
 				KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, true)),
 				KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, true),
 				JComponent.WHEN_FOCUSED);
-
-		// ------------------------------------- Event code  ----------------------------------
 		LoginBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Boolean checked = JSS.loginCheck(admnum_Field.getText(), pass_Field.getPassword());
@@ -532,6 +530,8 @@ public class AdminGUI extends JFrame {
 
 			}
 		});
+
+		/* ---------------------------------- Event code ----------------------------------*/
 
 		order_list.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent event) {
@@ -627,6 +627,12 @@ public class AdminGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				cnt_panel.setVisible(false);
 				mat_panel.setVisible(true);
+
+				int[] cntamt = JSS.load_amount();
+				square_amt.setText(Integer.toString(cntamt[0]) + " 개");
+				rectangle_amt.setText(Integer.toString(cntamt[1]) + " 개");
+				hexagon_amt.setText(Integer.toString(cntamt[2]) + " 개");
+				octagon_amt.setText(Integer.toString(cntamt[3]) + " 개");
 			}
 		});
 
@@ -634,6 +640,12 @@ public class AdminGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				cnt_panel.setVisible(false);
 				mat_panel.setVisible(true);
+
+				int[] cntamt = JSS.load_amount();
+				square_amt.setText(Integer.toString(cntamt[0]) + " 개");
+				rectangle_amt.setText(Integer.toString(cntamt[1]) + " 개");
+				hexagon_amt.setText(Integer.toString(cntamt[2]) + " 개");
+				octagon_amt.setText(Integer.toString(cntamt[3]) + " 개");
 			}
 		});
 
@@ -733,13 +745,13 @@ public class AdminGUI extends JFrame {
 					newEditFrame.getContentPane().add(dateValueLabel);
 
 					// 콤보박스 추가
-					String[] styleList = { "", " Square", " Rectangle", " Hexagon", " Octagon" };
+					String[] styleList = { "", "Square", "Rectangle", "Hexagon", "Octagon" };
 					final JComboBox<String> styleComboBox = new JComboBox<String>(styleList);
 					styleComboBox.setFont(new Font("아임크리수진", Font.PLAIN, 16));
 					styleComboBox.setBounds(130, 110, 200, 20);
 					newEditFrame.getContentPane().add(styleComboBox);
 
-					String[] customList = { "", " YES", " NO" };
+					String[] customList = { "", "YES", "NO" };
 					final JComboBox<String> customComboBox = new JComboBox<String>(customList);
 					customComboBox.setFont(new Font("아임크리수진", Font.PLAIN, 16));
 					customComboBox.setBounds(130, 140, 200, 20);
@@ -768,25 +780,25 @@ public class AdminGUI extends JFrame {
 										} else {
 											boolean amt_check = false;
 											int[] cntamt = JSS.load_amount();
-											if (styleComboBox.getSelectedItem().toString() == " Square") {
+											if (styleComboBox.getSelectedItem().toString() == "Square") {
 												if (cntamt[0] == 0) {
 													amt_check = false;
 												} else {
 													amt_check = true;
 												}
-											} else if (styleComboBox.getSelectedItem().toString() == " Rectangle") {
+											} else if (styleComboBox.getSelectedItem().toString() == "Rectangle") {
 												if (cntamt[1] == 0) {
 													amt_check = false;
 												} else {
 													amt_check = true;
 												}
-											} else if (styleComboBox.getSelectedItem().toString() == " Hexagon") {
+											} else if (styleComboBox.getSelectedItem().toString() == "Hexagon") {
 												if (cntamt[2] == 0) {
 													amt_check = false;
 												} else {
 													amt_check = true;
 												}
-											} else if (styleComboBox.getSelectedItem().toString() == " Octagon") {
+											} else if (styleComboBox.getSelectedItem().toString() == "Octagon") {
 												if (cntamt[3] == 0) {
 													amt_check = false;
 												} else {
@@ -801,8 +813,8 @@ public class AdminGUI extends JFrame {
 												if (ans == 0) {
 													String[] targetOrder = {
 															String.valueOf(selected_order.getValueAt(0, 1)),
-															String.valueOf(" " + nameTextField.getText().trim()),
-															String.valueOf(" " + phoneTextField.getText().trim()),
+															String.valueOf(nameTextField.getText().trim()),
+															String.valueOf(phoneTextField.getText().trim()),
 															String.valueOf(styleComboBox.getSelectedItem().toString()),
 															String.valueOf(customComboBox.getSelectedItem().toString())
 													};
