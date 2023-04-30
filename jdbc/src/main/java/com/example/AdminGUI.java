@@ -302,6 +302,8 @@ public class AdminGUI extends JFrame {
 		Save_amt.setBounds(720, 300, 90, 130);
 		mat_panel.add(Save_amt);
 
+		final String[][] list_data = JSS.OrderTable();
+
 		// control page
 
 		final JPanel cnt_panel = new JPanel();
@@ -311,8 +313,13 @@ public class AdminGUI extends JFrame {
 		cnt_panel.setLayout(null);
 		cnt_panel.setVisible(false);
 
-		// 선택 불가능한 행과 열 인덱스
+		
 		selected_order = new JTable();
+		selected_order.setEnabled(false);
+		selected_order.setFocusable(false);
+		selected_order.setRowSelectionAllowed(false);
+		selected_order.setColumnSelectionAllowed(false);
+		selected_order.setCellSelectionEnabled(false);
 		selected_order.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		selected_order.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		selected_order.setFont(new Font("아임크리수진", Font.PLAIN, 13));
@@ -369,37 +376,6 @@ public class AdminGUI extends JFrame {
 		panelRpaintBtn.setBounds(446, 24, 120, 31);
 		cnt_panel.add(panelRpaintBtn);
 
-		// PANEL REPAINTER
-		panelRpaintBtn.addActionListener(new ActionListener() {
-			int[] columnwidth = { 38, 57, 84, 90, 69, 150 };
-
-			public void actionPerformed(ActionEvent e) {
-				String[][] list_data = JSS.OrderTable();
-
-				// 테이블 모델에 데이터 적용
-				DefaultTableModel model = (DefaultTableModel) order_list.getModel();
-				model.setDataVector(list_data, new String[] { "ID", "NAME", "PHONE", "MATERIAL", "CUSTOM", "DATE" });
-
-				TableColumnModel columnModel = order_list.getColumnModel();
-				for (int i = 0; i < 6; i++) {
-					columnModel.getColumn(i).setPreferredWidth(columnwidth[i]);
-				}
-
-				// 테이블 리프레시
-				order_list.repaint();
-
-				// orderIds 초기화
-				orderIds.clear();
-				// 새로운 orderIds 생성
-				for (String[] row : list_data) {
-					String orderId = row[0];
-					if (!orderIds.contains(orderId)) {
-						orderIds.add(orderId);
-					}
-				}
-			}
-		});
-
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(12, 65, 554, 475);
 		cnt_panel.add(scrollPane);
@@ -411,8 +387,6 @@ public class AdminGUI extends JFrame {
 		order_list.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		order_list.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		order_list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-		final String[][] list_data = JSS.OrderTable();
 
 		order_list.setModel(new DefaultTableModel(
 				list_data,
@@ -447,91 +421,36 @@ public class AdminGUI extends JFrame {
 		MaterialControl.setBounds(175, 13, 160, 40);
 		cnt_panel.add(MaterialControl);
 
-		final JPanel Login_panel = new JPanel();
-		Login_panel.setBackground(Color.WHITE);
-		Login_panel.setBounds(0, 0, 884, 561);
-		admLogin.getContentPane().add(Login_panel);
-		Login_panel.setLayout(null);
+		// PANEL REPAINTER
+		panelRpaintBtn.addActionListener(new ActionListener() {
+			int[] columnwidth = { 38, 57, 84, 90, 69, 150 };
 
-		final JButton LoginBtn = new JButton("로그인");
-		LoginBtn.setBounds(633, 225, 113, 142);
-		LoginBtn.setFont(new Font("아임크리수진", Font.PLAIN, 25));
-		Login_panel.add(LoginBtn);
-
-		JLabel TitleLabel = new JLabel("[  관리자 로그인  ]");
-		TitleLabel.setBounds(207, 10, 500, 100);
-		Login_panel.add(TitleLabel);
-		TitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		TitleLabel.setFont(new Font("아임크리수진", Font.PLAIN, 53));
-
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(164, 225, 470, 142);
-		Login_panel.add(panel);
-		panel.setLayout(null);
-
-		JLabel numLabel = new JLabel("사원 번호 :");
-		numLabel.setBounds(12, 7, 200, 47);
-		panel.add(numLabel);
-		numLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		numLabel.setFont(new Font("아임크리수진", Font.PLAIN, 40));
-
-		admnum_Field = new JTextField();
-		admnum_Field.setBounds(212, 7, 246, 42);
-		panel.add(admnum_Field);
-		admnum_Field.setFont(new Font("아임크리수진", Font.PLAIN, 30));
-		admnum_Field.setColumns(10);
-
-		JLabel pwLabel = new JLabel("비밀 번호 :");
-		pwLabel.setBounds(12, 84, 200, 47);
-		panel.add(pwLabel);
-		pwLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		pwLabel.setFont(new Font("아임크리수진", Font.PLAIN, 40));
-
-		pass_Field = new JPasswordField();
-		pass_Field.setBounds(212, 90, 246, 42);
-		pass_Field.setColumns(10);
-		panel.add(pass_Field);
-		pass_Field.setEchoChar('●');
-		pass_Field.setFont(new Font("아임크리수진", Font.PLAIN, 30));
-
-		LoginBtn.registerKeyboardAction(LoginBtn.getActionForKeyStroke(
-				KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false)),
-				KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false),
-				JComponent.WHEN_FOCUSED);
-		LoginBtn.registerKeyboardAction(LoginBtn.getActionForKeyStroke(
-				KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, true)),
-				KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, true),
-				JComponent.WHEN_FOCUSED);
-		LoginBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Boolean checked = JSS.loginCheck(admnum_Field.getText(), pass_Field.getPassword());
-				if (checked == true) {
-					Login_panel.setVisible(false);
-					cnt_panel.setVisible(true);
-					adminName_Label.setText(JSS.logined_admin);
-					adminName_Label_1.setText(JSS.logined_admin);
+				String[][] list_data = JSS.OrderTable();
 
-					int[] cntamt = JSS.load_amount();
-					square_amt.setText(Integer.toString(cntamt[0]) + " 개");
-					rectangle_amt.setText(Integer.toString(cntamt[1]) + " 개");
-					hexagon_amt.setText(Integer.toString(cntamt[2]) + " 개");
-					octagon_amt.setText(Integer.toString(cntamt[3]) + " 개");
+				// 테이블 모델에 데이터 적용
+				DefaultTableModel model = (DefaultTableModel) order_list.getModel();
+				model.setDataVector(list_data, new String[] { "ID", "NAME", "PHONE", "MATERIAL", "CUSTOM", "DATE" });
 
-					square_ps_amt.setText("0");
-					rectangle_ps_amt.setText("0");
-					hexagon_ps_amt.setText("0");
-					octagon_ps_amt.setText("0");
-
-					System.out.println("\n√  관리자 시스템 접근확인 - " + JSS.logined_admin);
-				} else if (checked == false) {
-					JOptionPane.showMessageDialog(null, "시스템에 있는 관리자 정보와 다릅니다.", "접근 경고", JOptionPane.WARNING_MESSAGE);
+				TableColumnModel columnModel = order_list.getColumnModel();
+				for (int i = 0; i < 6; i++) {
+					columnModel.getColumn(i).setPreferredWidth(columnwidth[i]);
 				}
 
+				// 테이블 리프레시
+				order_list.repaint();
+
+				// orderIds 초기화
+				orderIds.clear();
+				// 새로운 orderIds 생성
+				for (String[] row : list_data) {
+					String orderId = row[0];
+					if (!orderIds.contains(orderId)) {
+						orderIds.add(orderId);
+					}
+				}
 			}
 		});
-
-		/* ---------------------------------- Event code ---------------------------------- */
 
 		order_list.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent event) {
@@ -549,74 +468,7 @@ public class AdminGUI extends JFrame {
 			}
 		});
 
-		rec_down_Btn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int recPs = Integer.parseInt(rectangle_ps_amt.getText());
-				recPs = recPs - 1;
-				rectangle_ps_amt.setText(Integer.toString(recPs));
-			}
-		});
-		rec_up_Btn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int recPs = Integer.parseInt(rectangle_ps_amt.getText());
-				recPs = recPs + 1;
-				rectangle_ps_amt.setText(Integer.toString(recPs));
-			}
-		});
-
-		sqa_down_Btn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int sqaPs = Integer.parseInt(square_ps_amt.getText());
-				sqaPs = sqaPs - 1;
-				square_ps_amt.setText(Integer.toString(sqaPs));
-			}
-		});
-		sqa_up_Btn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int sqaPs = Integer.parseInt(square_ps_amt.getText());
-				sqaPs = sqaPs + 1;
-				square_ps_amt.setText(Integer.toString(sqaPs));
-			}
-		});
-
-		hex_down_Btn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int hexPs = Integer.parseInt(hexagon_ps_amt.getText());
-				hexPs = hexPs - 1;
-				hexagon_ps_amt.setText(Integer.toString(hexPs));
-			}
-		});
-		hex_up_Btn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int hexPs = Integer.parseInt(hexagon_ps_amt.getText());
-				hexPs = hexPs + 1;
-				hexagon_ps_amt.setText(Integer.toString(hexPs));
-			}
-		});
-
-		oct_down_Btn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int octPs = Integer.parseInt(octagon_ps_amt.getText());
-				octPs = octPs - 1;
-				octagon_ps_amt.setText(Integer.toString(octPs));
-			}
-		});
-		oct_up_Btn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int octPs = Integer.parseInt(octagon_ps_amt.getText());
-				octPs = octPs + 1;
-				octagon_ps_amt.setText(Integer.toString(octPs));
-			}
-		});
-
 		OrderControl.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cnt_panel.setVisible(true);
-				mat_panel.setVisible(false);
-			}
-		});
-
-		OrderControl_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cnt_panel.setVisible(true);
 				mat_panel.setVisible(false);
@@ -633,46 +485,6 @@ public class AdminGUI extends JFrame {
 				rectangle_amt.setText(Integer.toString(cntamt[1]) + " 개");
 				hexagon_amt.setText(Integer.toString(cntamt[2]) + " 개");
 				octagon_amt.setText(Integer.toString(cntamt[3]) + " 개");
-			}
-		});
-
-		MaterialControl_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cnt_panel.setVisible(false);
-				mat_panel.setVisible(true);
-
-				int[] cntamt = JSS.load_amount();
-				square_amt.setText(Integer.toString(cntamt[0]) + " 개");
-				rectangle_amt.setText(Integer.toString(cntamt[1]) + " 개");
-				hexagon_amt.setText(Integer.toString(cntamt[2]) + " 개");
-				octagon_amt.setText(Integer.toString(cntamt[3]) + " 개");
-			}
-		});
-
-		Save_amt.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int sqa = Integer.parseInt(square_ps_amt.getText());
-				int rec = Integer.parseInt(rectangle_ps_amt.getText());
-				int hex = Integer.parseInt(hexagon_ps_amt.getText());
-				int oct = Integer.parseInt(octagon_ps_amt.getText());
-				if (sqa == 0 && rec == 0 && hex == 0 && oct == 0) {
-					JOptionPane.showMessageDialog(null, "추가할 자재갯수는 모두 0개가 될 수 없습니다", "자재 추가 오류",
-							JOptionPane.WARNING_MESSAGE);
-				} else {
-					int[] upAmount = { rec, sqa, hex, oct };
-					JSS.update_mat_amt(upAmount);
-
-					int[] cntamt = JSS.load_amount();
-					square_amt.setText(Integer.toString(cntamt[0]) + " 개");
-					rectangle_amt.setText(Integer.toString(cntamt[1]) + " 개");
-					hexagon_amt.setText(Integer.toString(cntamt[2]) + " 개");
-					octagon_amt.setText(Integer.toString(cntamt[3]) + " 개");
-
-					square_ps_amt.setText("0");
-					rectangle_ps_amt.setText("0");
-					hexagon_ps_amt.setText("0");
-					octagon_ps_amt.setText("0");
-				}
 			}
 		});
 
@@ -903,6 +715,199 @@ public class AdminGUI extends JFrame {
 						}
 						JOptionPane.showMessageDialog(null, "주문정보가 삭제되었습니다.", "삭제 완료", 0);
 					}
+				}
+			}
+		});
+
+		final JPanel Login_panel = new JPanel();
+		Login_panel.setBackground(Color.WHITE);
+		Login_panel.setBounds(0, 0, 884, 561);
+		admLogin.getContentPane().add(Login_panel);
+		Login_panel.setLayout(null);
+
+		final JButton LoginBtn = new JButton("로그인");
+		LoginBtn.setBounds(636, 235, 110, 120);
+		LoginBtn.setFont(new Font("아임크리수진", Font.PLAIN, 25));
+		Login_panel.add(LoginBtn);
+
+		JLabel TitleLabel = new JLabel("[  관리자 로그인  ]");
+		TitleLabel.setBounds(207, 10, 500, 100);
+		Login_panel.add(TitleLabel);
+		TitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		TitleLabel.setFont(new Font("아임크리수진", Font.PLAIN, 53));
+
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(255, 255, 255));
+		panel.setBounds(164, 225, 470, 142);
+		Login_panel.add(panel);
+		panel.setLayout(null);
+
+		JLabel numLabel = new JLabel("사원 번호 :");
+		numLabel.setBounds(12, 7, 200, 47);
+		panel.add(numLabel);
+		numLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		numLabel.setFont(new Font("아임크리수진", Font.PLAIN, 40));
+
+		admnum_Field = new JTextField();
+		admnum_Field.setBounds(212, 7, 246, 42);
+		panel.add(admnum_Field);
+		admnum_Field.setFont(new Font("아임크리수진", Font.PLAIN, 30));
+		admnum_Field.setColumns(10);
+
+		JLabel pwLabel = new JLabel("비밀 번호 :");
+		pwLabel.setBounds(12, 84, 200, 47);
+		panel.add(pwLabel);
+		pwLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		pwLabel.setFont(new Font("아임크리수진", Font.PLAIN, 40));
+
+		pass_Field = new JPasswordField();
+		pass_Field.setBounds(212, 90, 246, 42);
+		pass_Field.setColumns(10);
+		panel.add(pass_Field);
+		pass_Field.setEchoChar('●');
+		pass_Field.setFont(new Font("아임크리수진", Font.PLAIN, 30));
+
+		/* ============================EventCode============================ */
+
+		LoginBtn.registerKeyboardAction(LoginBtn.getActionForKeyStroke(
+				KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false)),
+				KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false),
+				JComponent.WHEN_FOCUSED);
+		LoginBtn.registerKeyboardAction(LoginBtn.getActionForKeyStroke(
+				KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, true)),
+				KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, true),
+				JComponent.WHEN_FOCUSED);
+		LoginBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Boolean checked = JSS.loginCheck(admnum_Field.getText(), pass_Field.getPassword());
+				if (checked == true) {
+					Login_panel.setVisible(false);
+					cnt_panel.setVisible(true);
+					adminName_Label.setText(JSS.logined_admin);
+					adminName_Label_1.setText(JSS.logined_admin);
+
+					int[] cntamt = JSS.load_amount();
+					square_amt.setText(Integer.toString(cntamt[0]) + " 개");
+					rectangle_amt.setText(Integer.toString(cntamt[1]) + " 개");
+					hexagon_amt.setText(Integer.toString(cntamt[2]) + " 개");
+					octagon_amt.setText(Integer.toString(cntamt[3]) + " 개");
+
+					square_ps_amt.setText("0");
+					rectangle_ps_amt.setText("0");
+					hexagon_ps_amt.setText("0");
+					octagon_ps_amt.setText("0");
+
+					System.out.println("\n√  관리자 시스템 접근확인 - " + JSS.logined_admin);
+				} else if (checked == false) {
+					JOptionPane.showMessageDialog(null, "시스템에 있는 관리자 정보와 다릅니다.", "접근 경고", JOptionPane.WARNING_MESSAGE);
+				}
+
+			}
+		});
+
+		rec_down_Btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int recPs = Integer.parseInt(rectangle_ps_amt.getText());
+				recPs = recPs - 1;
+				rectangle_ps_amt.setText(Integer.toString(recPs));
+			}
+		});
+		rec_up_Btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int recPs = Integer.parseInt(rectangle_ps_amt.getText());
+				recPs = recPs + 1;
+				rectangle_ps_amt.setText(Integer.toString(recPs));
+			}
+		});
+
+		sqa_down_Btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int sqaPs = Integer.parseInt(square_ps_amt.getText());
+				sqaPs = sqaPs - 1;
+				square_ps_amt.setText(Integer.toString(sqaPs));
+			}
+		});
+		sqa_up_Btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int sqaPs = Integer.parseInt(square_ps_amt.getText());
+				sqaPs = sqaPs + 1;
+				square_ps_amt.setText(Integer.toString(sqaPs));
+			}
+		});
+
+		hex_down_Btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int hexPs = Integer.parseInt(hexagon_ps_amt.getText());
+				hexPs = hexPs - 1;
+				hexagon_ps_amt.setText(Integer.toString(hexPs));
+			}
+		});
+		hex_up_Btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int hexPs = Integer.parseInt(hexagon_ps_amt.getText());
+				hexPs = hexPs + 1;
+				hexagon_ps_amt.setText(Integer.toString(hexPs));
+			}
+		});
+
+		oct_down_Btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int octPs = Integer.parseInt(octagon_ps_amt.getText());
+				octPs = octPs - 1;
+				octagon_ps_amt.setText(Integer.toString(octPs));
+			}
+		});
+		oct_up_Btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int octPs = Integer.parseInt(octagon_ps_amt.getText());
+				octPs = octPs + 1;
+				octagon_ps_amt.setText(Integer.toString(octPs));
+			}
+		});
+
+		OrderControl_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cnt_panel.setVisible(true);
+				mat_panel.setVisible(false);
+			}
+		});
+
+		MaterialControl_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cnt_panel.setVisible(false);
+				mat_panel.setVisible(true);
+
+				int[] cntamt = JSS.load_amount();
+				square_amt.setText(Integer.toString(cntamt[0]) + " 개");
+				rectangle_amt.setText(Integer.toString(cntamt[1]) + " 개");
+				hexagon_amt.setText(Integer.toString(cntamt[2]) + " 개");
+				octagon_amt.setText(Integer.toString(cntamt[3]) + " 개");
+			}
+		});
+
+		Save_amt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int sqa = Integer.parseInt(square_ps_amt.getText());
+				int rec = Integer.parseInt(rectangle_ps_amt.getText());
+				int hex = Integer.parseInt(hexagon_ps_amt.getText());
+				int oct = Integer.parseInt(octagon_ps_amt.getText());
+				if (sqa == 0 && rec == 0 && hex == 0 && oct == 0) {
+					JOptionPane.showMessageDialog(null, "추가할 자재갯수는 모두 0개가 될 수 없습니다", "자재 추가 오류",
+							JOptionPane.WARNING_MESSAGE);
+				} else {
+					int[] upAmount = { rec, sqa, hex, oct };
+					JSS.update_mat_amt(upAmount);
+
+					int[] cntamt = JSS.load_amount();
+					square_amt.setText(Integer.toString(cntamt[0]) + " 개");
+					rectangle_amt.setText(Integer.toString(cntamt[1]) + " 개");
+					hexagon_amt.setText(Integer.toString(cntamt[2]) + " 개");
+					octagon_amt.setText(Integer.toString(cntamt[3]) + " 개");
+
+					square_ps_amt.setText("0");
+					rectangle_ps_amt.setText("0");
+					hexagon_ps_amt.setText("0");
+					octagon_ps_amt.setText("0");
 				}
 			}
 		});
