@@ -895,7 +895,7 @@ public class AdminGUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "추가할 자재갯수는 모두 0개가 될 수 없습니다", "자재 추가 오류",
 							JOptionPane.WARNING_MESSAGE);
 				} else {
-					int[] upAmount = { rec, sqa, hex, oct };
+					int[] upAmount = { sqa, rec, hex, oct };
 					JSS.update_mat_amt(upAmount);
 
 					int[] cntamt = JSS.load_amount();

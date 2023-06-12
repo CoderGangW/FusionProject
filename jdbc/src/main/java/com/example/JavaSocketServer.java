@@ -309,6 +309,10 @@ public class JavaSocketServer {
     
     //자재 개수 업데이트
     public void update_mat_amt(int[] Up_amont){
+        System.out.print("Update_Materials(Sqa,Rec,Hex,Oct) : ");
+        for(int i = 0; i<4; i++){
+            System.out.print(Up_amont[i]+" |");
+        }
         String update_mat_Str = "UPDATE materials set Square=Square+?,Rectangle=Rectangle+?,Hexagon=Hexagon+?,Octagon=Octagon+? WHERE idmaterials = ?";
         try (PreparedStatement pstmt = dao.conn.prepareStatement(update_mat_Str)){
             for(int i =0; i<4;i++){
