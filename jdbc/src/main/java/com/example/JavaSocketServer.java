@@ -237,6 +237,7 @@ public class JavaSocketServer {
             System.out.println("ERROR - Delete buyerinfo module : " + e.getMessage());
         }
     }
+    
     //취소된 주문 자재 갯수 복구
     public void rollbackOrder(String shape) {
         String nospace = shape.trim();
@@ -247,6 +248,7 @@ public class JavaSocketServer {
             System.out.println("ERROR - Update materials module" + e.getMessage());
         }
     }
+
     //수정된 주문 자재 갯수 수정
     public void edtOrder_mat(String old_order, String edt_order){
         String nsp_old_order = old_order.trim();
@@ -329,12 +331,12 @@ public class JavaSocketServer {
 
     public static void main(String[] args) throws IOException {
         JavaSocketServer server = new JavaSocketServer();
-        // MesGui mesgui  = new MesGui();
+        MesGui mesgui  = new MesGui();
         OrderGui order = new OrderGui();
         AdminGUI admpage = new AdminGUI();
         
 
-        // mesgui.Mes_gui();
+        mesgui.Mes_gui();
         dao.database();
         admpage.admin_page();
         order.order_pannel();
