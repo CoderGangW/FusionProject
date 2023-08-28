@@ -578,7 +578,15 @@ public class AdminGUI extends JFrame {
 
 		startBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "기능이 아직 구현되지 않았습니다", "기능 미구현", 0);
+				if (selected_order.getValueAt(0, 1) == null) {
+					JOptionPane.showMessageDialog(null, "주문을 선택하지않았습니다.", "주문을 선택해 주세요", 0);
+				} else {
+					int answer = JOptionPane.showConfirmDialog(null, "공정을 시작하시겠습니까?", "공정 시작",JOptionPane.YES_NO_OPTION );
+					if(answer == JOptionPane.YES_OPTION) {
+						JOptionPane.showMessageDialog(null, "공정이 시작됩니다.", "공정 시작", 1);
+						
+					}
+				}
 			}
 		});
 

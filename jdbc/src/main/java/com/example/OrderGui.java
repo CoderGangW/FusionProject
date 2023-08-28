@@ -60,7 +60,7 @@ public class OrderGui {
 		frame = new JFrame("사용자 주문 시스템");
 		frame.setBounds(100, 100, 640, 480);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocation(1000,200);
+		frame.setLocation(1000,0);
 		
 		JPanel bodyPanel = new JPanel();
 		bodyPanel.setBackground(new Color(255, 255, 255));

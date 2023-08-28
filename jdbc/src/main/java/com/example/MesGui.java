@@ -9,11 +9,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JTable;
 import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 import javax.swing.ImageIcon;
 
@@ -53,6 +50,7 @@ public class MesGui {
 		frame.setBounds(100, 100, 900, 550);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setLocation(1000,480);
 		
 		JLabel processingOrder_LB = new JLabel("진행중인 주문 : ");
 		processingOrder_LB.setHorizontalAlignment(SwingConstants.CENTER);
@@ -79,7 +77,7 @@ public class MesGui {
 		process_1.setToolTipText("");
 		process_1.setBackground(Color.RED);
 		process_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, Color.GRAY, Color.BLACK));
-		process_1.setBounds(12, 126, 160, 290);
+		process_1.setBounds(12, 150, 160, 167);
 		frame.getContentPane().add(process_1);
 		process_1.setLayout(null);
 		
@@ -87,7 +85,7 @@ public class MesGui {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("아임크리수진", Font.PLAIN, 20));
-		lblNewLabel.setBounds(12, 128, 136, 35);
+		lblNewLabel.setBounds(12, 68, 136, 35);
 		process_1.add(lblNewLabel);
 		
 		JPanel process_2 = new JPanel();
@@ -95,7 +93,7 @@ public class MesGui {
 		process_2.setToolTipText("");
 		process_2.setBackground(Color.RED);
 		process_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, Color.GRAY, Color.BLACK));
-		process_2.setBounds(242, 126, 160, 290);
+		process_2.setBounds(242, 150, 160, 167);
 		frame.getContentPane().add(process_2);
 		process_2.setLayout(null);
 		
@@ -103,7 +101,7 @@ public class MesGui {
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setForeground(Color.WHITE);
 		lblNewLabel_1.setFont(new Font("아임크리수진", Font.PLAIN, 20));
-		lblNewLabel_1.setBounds(12, 128, 136, 35);
+		lblNewLabel_1.setBounds(12, 69, 136, 35);
 		process_2.add(lblNewLabel_1);
 		
 		JPanel process_3 = new JPanel();
@@ -111,7 +109,7 @@ public class MesGui {
 		process_3.setToolTipText("");
 		process_3.setBackground(Color.RED);
 		process_3.setBorder(new EtchedBorder(EtchedBorder.LOWERED, Color.GRAY, Color.BLACK));
-		process_3.setBounds(483, 126, 160, 290);
+		process_3.setBounds(483, 150, 160, 167);
 		frame.getContentPane().add(process_3);
 		process_3.setLayout(null);
 		
@@ -119,7 +117,7 @@ public class MesGui {
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2.setForeground(Color.WHITE);
 		lblNewLabel_2.setFont(new Font("아임크리수진", Font.PLAIN, 20));
-		lblNewLabel_2.setBounds(12, 128, 136, 35);
+		lblNewLabel_2.setBounds(12, 70, 136, 35);
 		process_3.add(lblNewLabel_2);
 		
 		JPanel process_4 = new JPanel();
@@ -127,7 +125,7 @@ public class MesGui {
 		process_4.setToolTipText("");
 		process_4.setBackground(Color.RED);
 		process_4.setBorder(new EtchedBorder(EtchedBorder.LOWERED, Color.GRAY, Color.BLACK));
-		process_4.setBounds(712, 126, 160, 290);
+		process_4.setBounds(712, 150, 160, 167);
 		frame.getContentPane().add(process_4);
 		process_4.setLayout(null);
 		
@@ -135,46 +133,70 @@ public class MesGui {
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setForeground(Color.WHITE);
 		lblNewLabel_3.setFont(new Font("아임크리수진", Font.PLAIN, 20));
-		lblNewLabel_3.setBounds(12, 128, 136, 35);
+		lblNewLabel_3.setBounds(12, 69, 136, 35);
 		process_4.add(lblNewLabel_3);
 		
 		JLabel allow = new JLabel("");
 		allow.setIcon(new ImageIcon("C:\\Users\\User\\Desktop\\Personal\\Programing\\JAVA\\vscode\\jdbc\\img\\allowimg.png"));
-		allow.setBounds(184, 250, 45, 45);
+		allow.setBounds(184, 214, 45, 45);
 		frame.getContentPane().add(allow);
 		
 		JLabel allow_1 = new JLabel("");
 		allow_1.setIcon(new ImageIcon("C:\\Users\\User\\Desktop\\Personal\\Programing\\JAVA\\vscode\\jdbc\\img\\allowimg.png"));
-		allow_1.setBounds(420, 250, 45, 45);
+		allow_1.setBounds(420, 214, 45, 45);
 		frame.getContentPane().add(allow_1);
 		
 		JLabel allow_2 = new JLabel("");
 		allow_2.setIcon(new ImageIcon("C:\\Users\\User\\Desktop\\Personal\\Programing\\JAVA\\vscode\\jdbc\\img\\allowimg.png"));
-		allow_2.setBounds(655, 250, 45, 45);
+		allow_2.setBounds(655, 214, 45, 45);
 		frame.getContentPane().add(allow_2);
 		
 		JLabel processing_time_1 = new JLabel("0 초");
 		processing_time_1.setFont(new Font("아임크리수진", Font.PLAIN, 20));
 		processing_time_1.setHorizontalAlignment(SwingConstants.CENTER);
-		processing_time_1.setBounds(12, 441, 160, 36);
+		processing_time_1.setBounds(12, 327, 160, 36);
 		frame.getContentPane().add(processing_time_1);
 		
 		JLabel processing_time_2 = new JLabel("0 초");
 		processing_time_2.setHorizontalAlignment(SwingConstants.CENTER);
 		processing_time_2.setFont(new Font("아임크리수진", Font.PLAIN, 20));
-		processing_time_2.setBounds(243, 441, 160, 36);
+		processing_time_2.setBounds(243, 327, 160, 36);
 		frame.getContentPane().add(processing_time_2);
 		
 		JLabel processing_time_3 = new JLabel("0 초");
 		processing_time_3.setHorizontalAlignment(SwingConstants.CENTER);
 		processing_time_3.setFont(new Font("아임크리수진", Font.PLAIN, 20));
-		processing_time_3.setBounds(484, 441, 160, 36);
+		processing_time_3.setBounds(484, 327, 160, 36);
 		frame.getContentPane().add(processing_time_3);
 		
 		JLabel processing_time_4 = new JLabel("0 초");
 		processing_time_4.setHorizontalAlignment(SwingConstants.CENTER);
 		processing_time_4.setFont(new Font("아임크리수진", Font.PLAIN, 20));
-		processing_time_4.setBounds(712, 441, 160, 36);
+		processing_time_4.setBounds(712, 327, 160, 36);
 		frame.getContentPane().add(processing_time_4);
+		
+		JLabel allTime_LB = new JLabel("총 걸린 시간  : ");
+		allTime_LB.setFont(new Font("아임크리수진", Font.PLAIN, 20));
+		allTime_LB.setHorizontalAlignment(SwingConstants.CENTER);
+		allTime_LB.setBounds(503, 406, 160, 45);
+		frame.getContentPane().add(allTime_LB);
+		
+		JLabel allTime_LB_1 = new JLabel("0 초");
+		allTime_LB_1.setHorizontalAlignment(SwingConstants.CENTER);
+		allTime_LB_1.setFont(new Font("아임크리수진", Font.PLAIN, 20));
+		allTime_LB_1.setBounds(655, 406, 160, 45);
+		frame.getContentPane().add(allTime_LB_1);
+		
+		JLabel allTime_LB_2 = new JLabel("총 이동 시간  : ");
+		allTime_LB_2.setHorizontalAlignment(SwingConstants.CENTER);
+		allTime_LB_2.setFont(new Font("아임크리수진", Font.PLAIN, 20));
+		allTime_LB_2.setBounds(52, 406, 160, 45);
+		frame.getContentPane().add(allTime_LB_2);
+		
+		JLabel allTime_LB_1_1 = new JLabel("0 초");
+		allTime_LB_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		allTime_LB_1_1.setFont(new Font("아임크리수진", Font.PLAIN, 20));
+		allTime_LB_1_1.setBounds(204, 406, 160, 45);
+		frame.getContentPane().add(allTime_LB_1_1);
 	}
 }
