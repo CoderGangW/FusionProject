@@ -6,7 +6,7 @@
   
   # DOCUMENT INFOMATION
   
-  <img align="right" src="https://github-readme-stats.vercel.app/api/top-langs/?username=CoderGangW&layout=compact">
+  <img align="right" src="https://github-readme-stats.vercel.app/api/top-langs/?username=CoderGangW&layout=compact&&theme=cobalt">
   
   ## REPOSITORY Route
     
@@ -16,7 +16,7 @@
   
   ***
   
-  <img align="right" src="https://github-readme-stats.vercel.app/api?username=CoderGangW&show_icons=true">
+  <img align="right" src="https://github-readme-stats.vercel.app/api?username=CoderGangW&show_icons=true&&theme=cobalt">
   
   ## FILE Route
   
