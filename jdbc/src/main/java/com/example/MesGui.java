@@ -137,17 +137,17 @@ public class MesGui {
 		process_4.add(lblNewLabel_3);
 		
 		JLabel allow = new JLabel("");
-		allow.setIcon(new ImageIcon("C:\\Users\\User\\Desktop\\Personal\\Programing\\JAVA\\vscode\\jdbc\\img\\allowimg.png"));
+		allow.setIcon(new ImageIcon("C:\\Users\\User\\Desktop\\Personal\\Programing\\FusionProject\\JAVA\\vscode\\jdbc\\img\\allowimg.png"));
 		allow.setBounds(184, 214, 45, 45);
 		frame.getContentPane().add(allow);
 		
 		JLabel allow_1 = new JLabel("");
-		allow_1.setIcon(new ImageIcon("C:\\Users\\User\\Desktop\\Personal\\Programing\\JAVA\\vscode\\jdbc\\img\\allowimg.png"));
+		allow_1.setIcon(new ImageIcon("C:\\Users\\User\\Desktop\\Personal\\Programing\\FusionProject\\JAVA\\vscode\\jdbc\\img\\allowimg.png"));
 		allow_1.setBounds(420, 214, 45, 45);
 		frame.getContentPane().add(allow_1);
 		
 		JLabel allow_2 = new JLabel("");
-		allow_2.setIcon(new ImageIcon("C:\\Users\\User\\Desktop\\Personal\\Programing\\JAVA\\vscode\\jdbc\\img\\allowimg.png"));
+		allow_2.setIcon(new ImageIcon("C:\\Users\\User\\Desktop\\Personal\\Programing\\FusionProject\\JAVA\\vscode\\jdbc\\img\\allowimg.png"));
 		allow_2.setBounds(655, 214, 45, 45);
 		frame.getContentPane().add(allow_2);
 		

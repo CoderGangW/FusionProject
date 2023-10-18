@@ -1,7 +1,6 @@
 package com.example;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.*;
@@ -9,13 +8,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
-  
+
 public class JavaSocketServer {
     private ServerSocket serverSocket;
     private Socket clientSocket;
     private InputStream in;
     public String logined_admin;
-   
+
     static DAO dao = new DAO();
 
     // Socket server Open
@@ -57,25 +56,25 @@ public class JavaSocketServer {
         }
     }
 
-    
+
     /* 문자열 공백 체크 */
     static boolean isStringEmpty(String str) {
         return str == null || str.trim().isEmpty();
     }
 
     // 로그인 시스템
-    public Boolean loginCheck(String ID, char[] PW){
+    public Boolean loginCheck(String ID, char[] PW) {
         Boolean loginchecking = false;
 
-        if (isStringEmpty(ID)==true){
+        if (isStringEmpty(ID) == true) {
             JOptionPane.showMessageDialog(null, "사원번호를 입력해주세요.", "경고", JOptionPane.WARNING_MESSAGE);
         } else {
-            if( isStringEmpty(String.valueOf(PW)) == true) { 
+            if (isStringEmpty(String.valueOf(PW)) == true) {
                 JOptionPane.showMessageDialog(null, "비밀번호를 입력해주세요.", "경고", JOptionPane.WARNING_MESSAGE);
-            }   else {
+            } else {
                 try {
                     dao.stmt = dao.conn.createStatement();
-                    String Finduser = "SELECT * FROM admininfo WHERE admin_Num ="+ID;
+                    String Finduser = "SELECT * FROM admininfo WHERE admin_Num =" + ID;
 
                     dao.rs = dao.stmt.executeQuery(Finduser);
                     if (dao.rs.next()) {
@@ -108,53 +107,58 @@ public class JavaSocketServer {
         }
         return loginchecking;
     }
-    
+
     // 주문 GUI ActionEvent Trigger Function
-    public void ordergui(String name, String phone, String shape , Boolean stamp) {
+    public void ordergui(String name, String phone, String shape, Boolean stamp) {
         String NamefromGUI = name;
         String PhonefromGUI = phone;
         String ShapefromGUI = shape;
         String CustomfromGUI = stamp ? "YES" : "NO";
 
         Date nowDate = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd a HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String now = simpleDateFormat.format(nowDate);
 
-        if(isStringEmpty(NamefromGUI) == true){
-            JOptionPane.showMessageDialog(null, "이름을 입력해 주세요.", "경고",JOptionPane.WARNING_MESSAGE );
+        if (isStringEmpty(NamefromGUI) == true) {
+            JOptionPane.showMessageDialog(null, "이름을 입력해 주세요.", "경고", JOptionPane.WARNING_MESSAGE);
         } else {
-            if(isStringEmpty(PhonefromGUI) == true){
-                JOptionPane.showMessageDialog(null, "전화번호를 입력해 주세요.", "경고",JOptionPane.WARNING_MESSAGE );
-            }else{
-                if(isStringEmpty(ShapefromGUI)==true){
-                    JOptionPane.showMessageDialog(null, "스타일을 선택해 주세요.", "경고",JOptionPane.WARNING_MESSAGE );
-                } else{
+            if (isStringEmpty(PhonefromGUI) == true) {
+                JOptionPane.showMessageDialog(null, "전화번호를 입력해 주세요.", "경고", JOptionPane.WARNING_MESSAGE);
+            } else {
+                if (isStringEmpty(ShapefromGUI) == true) {
+                    JOptionPane.showMessageDialog(null, "스타일을 선택해 주세요.", "경고", JOptionPane.WARNING_MESSAGE);
+                } else {
                     int ans = JOptionPane.showConfirmDialog(null,
-                    "아래 정보가 맞으십니까? \n\n"
-                    +"이름 : "+NamefromGUI+"\n"
-                    +"전화번호 : "+PhonefromGUI+"\n"
-                    +"스타일 : "+ShapefromGUI+"\n"
-                    +"커스텀 : "+CustomfromGUI+"\n"
-                    , "주문 확인", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
-                    if (ans == 0){
+                            "아래 정보가 맞으십니까? \n\n"
+                                    + "이름 : " + NamefromGUI + "\n"
+                                    + "전화번호 : " + PhonefromGUI + "\n"
+                                    + "스타일 : " + ShapefromGUI + "\n"
+                                    + "커스텀 : " + CustomfromGUI + "\n",
+                            "주문 확인", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+                    if (ans == 0) {
                         try {
                             dao.stmt = dao.conn.createStatement();
                             dao.rs = dao.stmt.executeQuery("SELECT * FROM materials");
                             dao.rs.next();
                             int shapeFromDB = dao.rs.getInt(ShapefromGUI);
-                            if(shapeFromDB >= 1){
+                            if (shapeFromDB >= 1) {
                                 int setShapeDB = shapeFromDB - 1;
-                                String updateStr = "UPDATE materials"+" SET  "+shape+ " = "+setShapeDB+" ";
+                                String updateStr = "UPDATE materials" + " SET  " + shape + " = " + setShapeDB + " ";
                                 dao.stmt.executeUpdate(updateStr);
-                                String insertStr = "INSERT INTO buyerinfo(name, phone, material, custom, date) VALUES('"+NamefromGUI+ "' ,'"+PhonefromGUI+ "' ,'"+ShapefromGUI+ "' ,'"+CustomfromGUI+ "' , '"+now+"' )";
+                                String insertStr = "INSERT INTO buyerinfo(name, phone, material, custom, date) VALUES('"
+                                        + NamefromGUI + "' ,'" + PhonefromGUI + "' ,'" + ShapefromGUI + "' ,'"
+                                        + CustomfromGUI + "' , '" + now + "' )";
                                 dao.stmt.execute(insertStr);
-                                JOptionPane.showMessageDialog(null, "주문에 성공하였습니다!\n 관리자 곧 승인할것입니다.","주문 성공 ✅", JOptionPane.INFORMATION_MESSAGE);
-                                System.out.println(NamefromGUI+"|"+PhonefromGUI+"|"+ShapefromGUI+"|"+CustomfromGUI+"|"+now);
+                                JOptionPane.showMessageDialog(null, "주문에 성공하였습니다!\n 관리자 곧 승인할것입니다.", "주문 성공 ✅",
+                                        JOptionPane.INFORMATION_MESSAGE);
+                                System.out.println(NamefromGUI + "|" + PhonefromGUI + "|" + ShapefromGUI + "|"
+                                        + CustomfromGUI + "|" + now);
                                 System.out.println("√  데이터 추가 성공 - 구매정보");
-                            } else{
-                                JOptionPane.showMessageDialog(null, "재고가 없습니다.\n 관리자에게 문의하세요.", "재고 오류 ⚠️",JOptionPane.WARNING_MESSAGE );
+                            } else {
+                                JOptionPane.showMessageDialog(null, "재고가 없습니다.\n 관리자에게 문의하세요.", "재고 오류 ⚠️",
+                                        JOptionPane.WARNING_MESSAGE);
                             }
-                        } catch(Exception e) {
+                        } catch (Exception e) {
                             System.out.println("ERROR - Ordermodule: " + e.toString());
                         }
                     }
@@ -196,7 +200,6 @@ public class JavaSocketServer {
         }
         return data;
     }
-    
 
     // 선택된 행의 데이터 가져오기
     public String[] getOrderById(String ID) {
@@ -208,12 +211,12 @@ public class JavaSocketServer {
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     selectedTable = new String[] {
-                        rs.getString("idbuyerinfo"),
-                        rs.getString("name"),
-                        rs.getString("phone"),
-                        rs.getString("material"),
-                        rs.getString("custom"),
-                        rs.getString("date")
+                            rs.getString("idbuyerinfo"),
+                            rs.getString("name"),
+                            rs.getString("phone"),
+                            rs.getString("material"),
+                            rs.getString("custom"),
+                            rs.getString("date")
                     };
                 }
             }
@@ -224,11 +227,11 @@ public class JavaSocketServer {
         return selectedTable;
     }
 
-    //주문정보 삭제
+    // 주문정보 삭제
     public void delOrder(String ID) {
         int intID = Integer.parseInt(ID);
         String delStr = "DELETE FROM buyerinfo WHERE idbuyerinfo = ?";
-        try (PreparedStatement pstmt = dao.conn.prepareStatement(delStr)){
+        try (PreparedStatement pstmt = dao.conn.prepareStatement(delStr)) {
             pstmt.setInt(1, intID);
             pstmt.executeUpdate();
             System.out.println("\n√  데이터 삭제 성공 - 주문정보");
@@ -237,57 +240,59 @@ public class JavaSocketServer {
             System.out.println("ERROR - Delete buyerinfo module : " + e.getMessage());
         }
     }
-    
-    //취소된 주문 자재 갯수 복구
+
+    // 취소된 주문 자재 갯수 복구
     public void rollbackOrder(String shape) {
         String nospace = shape.trim();
-        String updateShape = "UPDATE materials set " + nospace + " = " + nospace + " + 1 WHERE idmaterials = 1";   
-        try (PreparedStatement pstmt = dao.conn.prepareStatement(updateShape)){
+        String updateShape = "UPDATE materials set " + nospace + " = " + nospace + " + 1 WHERE idmaterials = 1";
+        try (PreparedStatement pstmt = dao.conn.prepareStatement(updateShape)) {
             pstmt.executeUpdate();
         } catch (Exception e) {
             System.out.println("ERROR - Update materials module" + e.getMessage());
         }
     }
 
-    //수정된 주문 자재 갯수 수정
-    public void edtOrder_mat(String old_order, String edt_order){
+    // 수정된 주문 자재 갯수 수정
+    public void edtOrder_mat(String old_order, String edt_order) {
         String nsp_old_order = old_order.trim();
         String nsp_edt_order = edt_order.trim();
 
-        String updateShape_old = "UPDATE materials set " + nsp_old_order + " = " + nsp_old_order + " + 1 WHERE idmaterials = 1";   
-        try (PreparedStatement pstmt = dao.conn.prepareStatement(updateShape_old)){
+        String updateShape_old = "UPDATE materials set " + nsp_old_order + " = " + nsp_old_order
+                + " + 1 WHERE idmaterials = 1";
+        try (PreparedStatement pstmt = dao.conn.prepareStatement(updateShape_old)) {
             pstmt.executeUpdate();
         } catch (Exception e) {
             System.out.println("ERROR - nps_old_order Update" + e.getMessage());
         }
 
-        String updateShape_edt = "UPDATE materials set " + nsp_edt_order + " = " + nsp_edt_order + " - 1 WHERE idmaterials = 1";   
-        try (PreparedStatement pstmt = dao.conn.prepareStatement(updateShape_edt)){
+        String updateShape_edt = "UPDATE materials set " + nsp_edt_order + " = " + nsp_edt_order
+                + " - 1 WHERE idmaterials = 1";
+        try (PreparedStatement pstmt = dao.conn.prepareStatement(updateShape_edt)) {
             pstmt.executeUpdate();
         } catch (Exception e) {
             System.out.println("ERROR - nps_edt_order Update" + e.getMessage());
         }
     }
 
-    //주문정보 수정
-    public void editOrder(String[] editedOrder){
+    // 주문정보 수정
+    public void editOrder(String[] editedOrder) {
         int intID = Integer.parseInt(editedOrder[0]);
         String updateStr = "UPDATE buyerinfo set name=?,phone=?,material=?,custom=? WHERE idbuyerinfo = ?";
-        try (PreparedStatement pstmt = dao.conn.prepareStatement(updateStr)){
-            for(int i = 1; i<5; i++){
+        try (PreparedStatement pstmt = dao.conn.prepareStatement(updateStr)) {
+            for (int i = 1; i < 5; i++) {
                 pstmt.setString(i, editedOrder[i]);
             }
-            pstmt.setInt(5,intID);
+            pstmt.setInt(5, intID);
             pstmt.executeUpdate();
             System.out.println("\n√  데이터 수정 성공 - 주문정보");
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("ERROR - Update buyerinfo module" + e.getMessage());
         }
     }
-    
-    //자재 개수 불러오기
-    public int[] load_amount(){
+
+    // 자재 개수 불러오기
+    public int[] load_amount() {
         int[] cnt_amount = null;
         String amtStr = "SELECT * FROM  materials WHERE idmaterials = ?";
         try (PreparedStatement pstmt = dao.conn.prepareStatement(amtStr)) {
@@ -295,10 +300,10 @@ public class JavaSocketServer {
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     cnt_amount = new int[] {
-                        rs.getInt("Square"),
-                        rs.getInt("Rectangle"),
-                        rs.getInt("Hexagon"),
-                        rs.getInt("Octagon")
+                            rs.getInt("Square"),
+                            rs.getInt("Rectangle"),
+                            rs.getInt("Hexagon"),
+                            rs.getInt("Octagon")
                     };
                 }
             }
@@ -308,22 +313,22 @@ public class JavaSocketServer {
         }
         return cnt_amount;
     }
-    
-    //자재 개수 업데이트
-    public void update_mat_amt(int[] Up_amont){
+
+    // 자재 개수 업데이트
+    public void update_mat_amt(int[] Up_amont) {
         System.out.print("Update_Materials(Sqa,Rec,Hex,Oct) : ");
-        for(int i = 0; i<4; i++){
-            System.out.print(Up_amont[i]+" |");
+        for (int i = 0; i < 4; i++) {
+            System.out.print(Up_amont[i] + " |");
         }
         String update_mat_Str = "UPDATE materials set Square=Square+?,Rectangle=Rectangle+?,Hexagon=Hexagon+?,Octagon=Octagon+? WHERE idmaterials = ?";
-        try (PreparedStatement pstmt = dao.conn.prepareStatement(update_mat_Str)){
-            for(int i =0; i<4;i++){
-                pstmt.setInt(i+1, Up_amont[i]);
+        try (PreparedStatement pstmt = dao.conn.prepareStatement(update_mat_Str)) {
+            for (int i = 0; i < 4; i++) {
+                pstmt.setInt(i + 1, Up_amont[i]);
             }
             pstmt.setInt(5, 1);
             pstmt.executeUpdate();
             System.out.println("\n√  데이터 수정 성공 - 자재개수");
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("ERROR - Update materials module" + e.getMessage());
         }
@@ -331,16 +336,14 @@ public class JavaSocketServer {
 
     public static void main(String[] args) throws IOException {
         JavaSocketServer server = new JavaSocketServer();
-        MesGui mesgui  = new MesGui();
+        MesGui mesgui = new MesGui();
         OrderGui order = new OrderGui();
         AdminGUI admpage = new AdminGUI();
-        
 
         mesgui.Mes_gui();
         dao.database();
         admpage.admin_page();
         order.order_pannel();
-        server.start(9999);
+        server.start(2222);
     }
 }
-

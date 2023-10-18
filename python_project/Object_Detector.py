@@ -16,7 +16,7 @@ tf.keras.utils.disable_interactive_logging()
 currentPath = os.getcwd()
 
 HOST = 'localhost'
-PORT = 9999
+PORT = 2222
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.connect((HOST, PORT))
