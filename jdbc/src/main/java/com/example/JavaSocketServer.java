@@ -6,6 +6,8 @@ import java.net.Socket;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.swing.JOptionPane;
 
@@ -15,49 +17,50 @@ public class JavaSocketServer {
     private InputStream in;
     public String logined_admin;
 
+    public static boolean CameraCheck = false;
+
     static DAO dao = new DAO();
 
     // Socket server Open
     public void start(int port) throws IOException {
         serverSocket = new ServerSocket(port);
-        System.out.println("\n√  JAVA Socket 서버가 " + port +"번 포트에서 실행중입니다.");
+        System.out.println("\n√  인공지능 카메라 연결 대기중...");
         clientSocket = serverSocket.accept();
-        System.out.println("\n√  클라이언트 접속됨");
-        System.out.println("\n√  IP : " + clientSocket.getInetAddress().getHostName());
+        System.out.println("\n√  인공지능 카메라와 연결되었습니다.");
 
         in = clientSocket.getInputStream();
 
-        try{
+        try {
             while (true) {
                 byte[] buffer = new byte[1024];
                 int bytesRead = in.read(buffer);
                 String response = new String(buffer, 0, bytesRead);
-                System.out.println("\nDetected Object  :  " + response);
-
-                Date nowDate = new Date();
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd a HH:mm:ss");
-                String now = simpleDateFormat.format(nowDate);
-                
-                String insertStr = "INSERT INTO detected(object, date) VALUES (?, ?)";
-                try (PreparedStatement pstmt = dao.conn.prepareStatement(insertStr)) {
-                    pstmt.setString(1, response);
-                    pstmt.setString(2, now);
-                    pstmt.executeUpdate();
-                    System.out.println("√  데이터 추가 성공 - 검출정보");
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    System.out.println("ERROR : " + e.getMessage());
+                if(CameraCheck){
+                    System.out.println("\nDetected Object  :  " + response);
+                    Date nowDate = new Date();
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd a HH:mm:ss");
+                    String now = simpleDateFormat.format(nowDate);
+                    String insertStr = "INSERT INTO detected(object, date) VALUES (?, ?)";
+    
+                    try (PreparedStatement pstmt = dao.conn.prepareStatement(insertStr)) {
+                        pstmt.setString(1, response);
+                        pstmt.setString(2, now);
+                        pstmt.executeUpdate();
+                        System.out.println("√  데이터 추가 성공 - 검출정보");
+                        CameraCheck = false;
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        System.out.println("ERROR : " + e.getMessage());
+                    }
                 }
             }
-        } catch(Throwable e) {
-            e.printStackTrace();
+        } catch (Throwable e) {
             clientSocket.close();
-            System.out.println("○  소켓서버가 종료되었습니다 ");
+            System.out.println("○  인공지능 카메라와 연결이 끊어졌습니다.");
         }
     }
 
-
-    /* 문자열 공백 체크 */
+    // 문자열 공백 체크
     static boolean isStringEmpty(String str) {
         return str == null || str.trim().isEmpty();
     }
@@ -335,15 +338,35 @@ public class JavaSocketServer {
     }
 
     public static void main(String[] args) throws IOException {
-        JavaSocketServer server = new JavaSocketServer();
-        MesGui mesgui = new MesGui();
+        final JavaSocketServer server = new JavaSocketServer();
+        final MesGui mesgui = new MesGui();
         OrderGui order = new OrderGui();
         AdminGUI admpage = new AdminGUI();
 
-        mesgui.Mes_gui();
         dao.database();
         admpage.admin_page();
         order.order_pannel();
-        server.start(2222);
+        mesgui.Mes_gui();
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+
+        // 첫 번째 작업을 병렬로 실행
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mesgui.receiveMessagesFromUnity();
+            }
+        });
+
+        // 두 번째 작업을 병렬로 실행
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    server.start(2222);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }

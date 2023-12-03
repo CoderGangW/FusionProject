@@ -47,6 +47,7 @@ public class AdminGUI extends JFrame {
 	private ArrayList<String> orderIds = new ArrayList<>();
 
 	static JavaSocketServer JSS = new JavaSocketServer();
+	public MesGui MES = new	MesGui();
 
 	private JTextField rectangle_ps_amt;
 	private JTextField square_ps_amt;
@@ -137,6 +138,7 @@ public class AdminGUI extends JFrame {
 
 		admLogin = new JFrame("관리자 접근 시스템");
 		admLogin.setBounds(50, 250, 900, 600);
+		admLogin.setResizable(false);
 		admLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		admLogin.getContentPane().setLayout(null);
 
@@ -171,28 +173,28 @@ public class AdminGUI extends JFrame {
 
 		JLabel squareimg = new JLabel("");
 		squareimg.setIcon(new ImageIcon(
-				"C:\\Users\\User\\Desktop\\Personal\\Programing\\FusionProject\\JAVA\\vscode\\jdbc\\btnImage\\square.png"));
+				getClass().getClassLoader().getResource("square.png")));
 		squareimg.setBounds(160, 130, 120, 150);
 		squareimg.setOpaque(false);
 		mat_panel.add(squareimg);
 
 		JLabel rectangleimg = new JLabel("");
 		rectangleimg.setIcon(new ImageIcon(
-				"C:\\Users\\User\\Desktop\\Personal\\Programing\\FusionProject\\JAVA\\vscode\\jdbc\\btnImage\\rectangle.png"));
+				getClass().getClassLoader().getResource("rectangle.png")));
 		rectangleimg.setOpaque(false);
 		rectangleimg.setBounds(301, 131, 120, 150);
 		mat_panel.add(rectangleimg);
 
 		JLabel hexagonimg = new JLabel("");
 		hexagonimg.setIcon(new ImageIcon(
-				"C:\\Users\\User\\Desktop\\Personal\\Programing\\FusionProject\\JAVA\\vscode\\jdbc\\btnImage\\hexagon.png"));
+				getClass().getClassLoader().getResource("hexagon.png")));
 		hexagonimg.setOpaque(false);
 		hexagonimg.setBounds(440, 130, 120, 150);
 		mat_panel.add(hexagonimg);
 
 		JLabel octagonimg = new JLabel("");
 		octagonimg.setIcon(new ImageIcon(
-				"C:\\Users\\User\\Desktop\\Personal\\Programing\\FusionProject\\JAVA\\vscode\\jdbc\\btnImage\\octagon.png"));
+				getClass().getClassLoader().getResource("octagon.png")));
 		octagonimg.setOpaque(false);
 		octagonimg.setBounds(580, 130, 120, 150);
 		mat_panel.add(octagonimg);
@@ -243,7 +245,7 @@ public class AdminGUI extends JFrame {
 		JButton rec_up_Btn = new JButton("");
 		rec_up_Btn.setIcon(
 				new ImageIcon(
-						"C:\\Users\\User\\Desktop\\Personal\\Programing\\FusionProject\\JAVA\\vscode\\jdbc\\btnImage\\up.png"));
+						getClass().getClassLoader().getResource("up.png")));
 		rec_up_Btn.setBounds(400, 376, 21, 54);
 		rec_up_Btn.setFocusPainted(false);
 		rec_up_Btn.setOpaque(false);
@@ -253,7 +255,7 @@ public class AdminGUI extends JFrame {
 
 		JButton rec_down_Btn = new JButton("");
 		rec_down_Btn.setIcon(new ImageIcon(
-				"C:\\Users\\User\\Desktop\\Personal\\Programing\\FusionProject\\JAVA\\vscode\\jdbc\\btnImage\\down.png"));
+				getClass().getClassLoader().getResource("down.png")));
 		rec_down_Btn.setBounds(297, 376, 21, 54);
 		rec_down_Btn.setFocusPainted(false);
 		rec_down_Btn.setOpaque(false);
@@ -264,7 +266,7 @@ public class AdminGUI extends JFrame {
 		JButton sqa_up_Btn = new JButton("");
 		sqa_up_Btn.setIcon(
 				new ImageIcon(
-						"C:\\Users\\User\\Desktop\\Personal\\Programing\\FusionProject\\JAVA\\vscode\\jdbc\\btnImage\\up.png"));
+						getClass().getClassLoader().getResource("up.png")));
 		sqa_up_Btn.setBounds(261, 376, 21, 54);
 		sqa_up_Btn.setFocusPainted(false);
 		sqa_up_Btn.setOpaque(false);
@@ -281,7 +283,7 @@ public class AdminGUI extends JFrame {
 
 		JButton sqa_down_Btn = new JButton("");
 		sqa_down_Btn.setIcon(new ImageIcon(
-				"C:\\Users\\User\\Desktop\\Personal\\Programing\\FusionProject\\JAVA\\vscode\\jdbc\\btnImage\\down.png"));
+				getClass().getClassLoader().getResource("down.png")));
 		sqa_down_Btn.setBounds(158, 376, 21, 54);
 		sqa_down_Btn.setFocusPainted(false);
 		sqa_down_Btn.setOpaque(false);
@@ -292,7 +294,7 @@ public class AdminGUI extends JFrame {
 		JButton hex_up_Btn = new JButton("");
 		hex_up_Btn.setIcon(
 				new ImageIcon(
-						"C:\\Users\\User\\Desktop\\Personal\\Programing\\FusionProject\\JAVA\\vscode\\jdbc\\btnImage\\up.png"));
+						getClass().getClassLoader().getResource("up.png")));
 		hex_up_Btn.setBounds(540, 376, 21, 54);
 		hex_up_Btn.setFocusPainted(false);
 		hex_up_Btn.setOpaque(false);
@@ -309,7 +311,7 @@ public class AdminGUI extends JFrame {
 
 		JButton hex_down_Btn = new JButton("");
 		hex_down_Btn.setIcon(new ImageIcon(
-				"C:\\Users\\User\\Desktop\\Personal\\Programing\\FusionProject\\JAVA\\vscode\\jdbc\\btnImage\\down.png"));
+				getClass().getClassLoader().getResource("down.png")));
 		hex_down_Btn.setBounds(437, 376, 21, 54);
 		hex_down_Btn.setFocusPainted(false);
 		hex_down_Btn.setOpaque(false);
@@ -320,7 +322,7 @@ public class AdminGUI extends JFrame {
 		JButton oct_up_Btn = new JButton("");
 		oct_up_Btn.setIcon(
 				new ImageIcon(
-						"C:\\Users\\User\\Desktop\\Personal\\Programing\\FusionProject\\JAVA\\vscode\\jdbc\\btnImage\\up.png"));
+						getClass().getClassLoader().getResource("up.png")));
 		oct_up_Btn.setBounds(680, 376, 21, 54);
 		oct_up_Btn.setFocusPainted(false);
 		oct_up_Btn.setOpaque(false);
@@ -337,7 +339,7 @@ public class AdminGUI extends JFrame {
 
 		JButton oct_down_Btn = new JButton("");
 		oct_down_Btn.setIcon(new ImageIcon(
-				"C:\\Users\\User\\Desktop\\Personal\\Programing\\FusionProject\\JAVA\\vscode\\jdbc\\btnImage\\down.png"));
+				getClass().getClassLoader().getResource("down.png")));
 		oct_down_Btn.setBounds(577, 376, 21, 54);
 		oct_down_Btn.setFocusPainted(false);
 		oct_down_Btn.setOpaque(false);
@@ -467,94 +469,101 @@ public class AdminGUI extends JFrame {
 		MaterialControl.setFont(new Font("아임크리수진", Font.PLAIN, 25));
 		MaterialControl.setBounds(175, 13, 160, 40);
 		cnt_panel.add(MaterialControl);
+		
+				final JPanel Login_panel = new JPanel();
+				Login_panel.setBackground(Color.WHITE);
+				Login_panel.setBounds(0, 0, 884, 561);
+				admLogin.getContentPane().add(Login_panel);
+				Login_panel.setLayout(null);
+				
+						final JButton LoginBtn = new JButton("로그인");
+						LoginBtn.setBounds(636, 235, 110, 120);
+						LoginBtn.setFont(new Font("아임크리수진", Font.PLAIN, 25));
+						Login_panel.add(LoginBtn);
+						
+								JLabel TitleLabel = new JLabel("[  관리자 로그인  ]");
+								TitleLabel.setBounds(207, 10, 500, 100);
+								Login_panel.add(TitleLabel);
+								TitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+								TitleLabel.setFont(new Font("아임크리수진", Font.PLAIN, 53));
+								
+										JPanel panel = new JPanel();
+										panel.setBackground(new Color(255, 255, 255));
+										panel.setBounds(164, 225, 470, 142);
+										Login_panel.add(panel);
+										panel.setLayout(null);
+										
+												JLabel numLabel = new JLabel("사원 번호 :");
+												numLabel.setBounds(12, 7, 200, 47);
+												panel.add(numLabel);
+												numLabel.setHorizontalAlignment(SwingConstants.CENTER);
+												numLabel.setFont(new Font("아임크리수진", Font.PLAIN, 40));
+												
+														admnum_Field = new JTextField();
+														admnum_Field.setBounds(212, 7, 246, 42);
+														panel.add(admnum_Field);
+														admnum_Field.setFont(new Font("아임크리수진", Font.PLAIN, 30));
+														admnum_Field.setColumns(10);
+														
+																JLabel pwLabel = new JLabel("비밀 번호 :");
+																pwLabel.setBounds(12, 84, 200, 47);
+																panel.add(pwLabel);
+																pwLabel.setHorizontalAlignment(SwingConstants.CENTER);
+																pwLabel.setFont(new Font("아임크리수진", Font.PLAIN, 40));
+																
+																		pass_Field = new JPasswordField();
+																		pass_Field.setBounds(212, 90, 246, 42);
+																		pass_Field.setColumns(10);
+																		panel.add(pass_Field);
+																		pass_Field.setEchoChar('●');
+																		pass_Field.setFont(new Font("아임크리수진", Font.PLAIN, 30));
+																		panel.setFocusTraversalPolicy(
+																				new FocusTraversalOnArray(new Component[] { numLabel, admnum_Field, pwLabel, pass_Field }));
+																		
+																		JLabel logoimg = new JLabel("");
+																		logoimg.setHorizontalAlignment(SwingConstants.CENTER);
+																		logoimg.setFont(new Font("굴림", Font.PLAIN, 5));
+																		logoimg.setIcon(new ImageIcon(getClass().getClassLoader().getResource("logo.png")));
+																		logoimg.setBounds(12, 10, 860, 541);
+																		Login_panel.add(logoimg);
+																		Login_panel.setFocusTraversalPolicy(new FocusTraversalOnArray(
+																				new Component[] { admnum_Field, pass_Field, LoginBtn, numLabel, pwLabel, panel, TitleLabel }));
+																		
+																				LoginBtn.registerKeyboardAction(LoginBtn.getActionForKeyStroke(
+																						KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false)),
+																						KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false),
+																						JComponent.WHEN_FOCUSED);
+																				LoginBtn.registerKeyboardAction(LoginBtn.getActionForKeyStroke(
+																						KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, true)),
+																						KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, true),
+																						JComponent.WHEN_FOCUSED);
+																				LoginBtn.addActionListener(new ActionListener() {
+																					public void actionPerformed(ActionEvent e) {
+																						Boolean checked = JSS.loginCheck(admnum_Field.getText(), pass_Field.getPassword());
+																						if (checked == true) {
+																							Login_panel.setVisible(false);
+																							cnt_panel.setVisible(true);
+																							adminName_Label.setText(JSS.logined_admin);
+																							adminName_Label_1.setText(JSS.logined_admin);
 
-		final JPanel Login_panel = new JPanel();
-		Login_panel.setBackground(Color.WHITE);
-		Login_panel.setBounds(0, 0, 884, 561);
-		admLogin.getContentPane().add(Login_panel);
-		Login_panel.setLayout(null);
+																							int[] cntamt = JSS.load_amount();
+																							square_amt.setText(Integer.toString(cntamt[0]) + " 개");
+																							rectangle_amt.setText(Integer.toString(cntamt[1]) + " 개");
+																							hexagon_amt.setText(Integer.toString(cntamt[2]) + " 개");
+																							octagon_amt.setText(Integer.toString(cntamt[3]) + " 개");
 
-		final JButton LoginBtn = new JButton("로그인");
-		LoginBtn.setBounds(636, 235, 110, 120);
-		LoginBtn.setFont(new Font("아임크리수진", Font.PLAIN, 25));
-		Login_panel.add(LoginBtn);
+																							square_ps_amt.setText("0");
+																							rectangle_ps_amt.setText("0");
+																							hexagon_ps_amt.setText("0");
+																							octagon_ps_amt.setText("0");
 
-		JLabel TitleLabel = new JLabel("[  관리자 로그인  ]");
-		TitleLabel.setBounds(207, 10, 500, 100);
-		Login_panel.add(TitleLabel);
-		TitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		TitleLabel.setFont(new Font("아임크리수진", Font.PLAIN, 53));
+																							System.out.println("\n√  관리자 시스템 접근확인 - " + JSS.logined_admin);
+																						} else if (checked == false) {
+																							JOptionPane.showMessageDialog(null, "시스템에 있는 관리자 정보와 다릅니다.", "접근 경고", JOptionPane.WARNING_MESSAGE);
+																						}
 
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(164, 225, 470, 142);
-		Login_panel.add(panel);
-		panel.setLayout(null);
-
-		JLabel numLabel = new JLabel("사원 번호 :");
-		numLabel.setBounds(12, 7, 200, 47);
-		panel.add(numLabel);
-		numLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		numLabel.setFont(new Font("아임크리수진", Font.PLAIN, 40));
-
-		admnum_Field = new JTextField();
-		admnum_Field.setBounds(212, 7, 246, 42);
-		panel.add(admnum_Field);
-		admnum_Field.setFont(new Font("아임크리수진", Font.PLAIN, 30));
-		admnum_Field.setColumns(10);
-
-		JLabel pwLabel = new JLabel("비밀 번호 :");
-		pwLabel.setBounds(12, 84, 200, 47);
-		panel.add(pwLabel);
-		pwLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		pwLabel.setFont(new Font("아임크리수진", Font.PLAIN, 40));
-
-		pass_Field = new JPasswordField();
-		pass_Field.setBounds(212, 90, 246, 42);
-		pass_Field.setColumns(10);
-		panel.add(pass_Field);
-		pass_Field.setEchoChar('●');
-		pass_Field.setFont(new Font("아임크리수진", Font.PLAIN, 30));
-		panel.setFocusTraversalPolicy(
-				new FocusTraversalOnArray(new Component[] { numLabel, admnum_Field, pwLabel, pass_Field }));
-		Login_panel.setFocusTraversalPolicy(new FocusTraversalOnArray(
-				new Component[] { admnum_Field, pass_Field, LoginBtn, numLabel, pwLabel, panel, TitleLabel }));
-
-		LoginBtn.registerKeyboardAction(LoginBtn.getActionForKeyStroke(
-				KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false)),
-				KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false),
-				JComponent.WHEN_FOCUSED);
-		LoginBtn.registerKeyboardAction(LoginBtn.getActionForKeyStroke(
-				KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, true)),
-				KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, true),
-				JComponent.WHEN_FOCUSED);
-		LoginBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Boolean checked = JSS.loginCheck(admnum_Field.getText(), pass_Field.getPassword());
-				if (checked == true) {
-					Login_panel.setVisible(false);
-					cnt_panel.setVisible(true);
-					adminName_Label.setText(JSS.logined_admin);
-					adminName_Label_1.setText(JSS.logined_admin);
-
-					int[] cntamt = JSS.load_amount();
-					square_amt.setText(Integer.toString(cntamt[0]) + " 개");
-					rectangle_amt.setText(Integer.toString(cntamt[1]) + " 개");
-					hexagon_amt.setText(Integer.toString(cntamt[2]) + " 개");
-					octagon_amt.setText(Integer.toString(cntamt[3]) + " 개");
-
-					square_ps_amt.setText("0");
-					rectangle_ps_amt.setText("0");
-					hexagon_ps_amt.setText("0");
-					octagon_ps_amt.setText("0");
-
-					System.out.println("\n√  관리자 시스템 접근확인 - " + JSS.logined_admin);
-				} else if (checked == false) {
-					JOptionPane.showMessageDialog(null, "시스템에 있는 관리자 정보와 다릅니다.", "접근 경고", JOptionPane.WARNING_MESSAGE);
-				}
-
-			}
-		});
+																					}
+																				});
 
 		// PANEL REPAINTER
 		panelRpaintBtn.addActionListener(new ActionListener() {

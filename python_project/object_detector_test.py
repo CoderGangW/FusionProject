@@ -56,9 +56,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         confidence_score = prediction[0][index]
         
         cv_text = (class_name[2:]+" : "+ str(np.round(confidence_score * 100))[:-2]+ "%")
-        cv2.putText(frame, cv_text,(10,25), cv2.FONT_HERSHEY_DUPLEX, 1, (255,0,139),2)
-        cv2.imshow('Vision System', frame)
-
+        cv2.putText(frame, cv_text,(10,25), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 255, 0),2)
+        cv2.imshow('frame', frame)
+        
         os.system('cls')
         print(" - 검출된 물체 :", class_name[2:], end=" | ")
         print("신뢰도 :", str(np.round(confidence_score * 100))[:-2], "%")

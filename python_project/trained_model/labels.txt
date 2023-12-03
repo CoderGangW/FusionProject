@@ -1,4 +1,5 @@
-0 None
-1 pencil
-2 person
-3 cellPhone
+0 Square
+1 Hexagon
+2 Octagon
+3 Rectangle
+4 NULL
