@@ -26,7 +26,7 @@
   
   ---
   
-  ## WANING
+  ## WARNING
   
   ### DO NOT OPEN OR CHANGE OTHER FILES.
 
